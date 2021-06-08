@@ -28,6 +28,8 @@ end
 alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get geometry data
+figure(1)
+drawBore 'pipe'
 fingering = 0;
 [boreData, holeData] = pipe( fingering );
 if isempty( boreData )
@@ -39,6 +41,7 @@ ZinOpen = tmm( boreData, holeData, rho, c, k, alpha, endType ); % ideally open e
 ZinClosed = tmm( boreData, holeData, rho, c, k, alpha, 0 );     % ideally closed end
 
 % Plot result
+figure(2)
 plot( f, 20*log10(abs(ZinOpen)), 'b-', f, 20*log10(abs(ZinClosed)), 'r-', 'LineWidth', 2 );
 ylabel('20*log10(|Impedance|)')
 xlabel('Frequency (Hz)')

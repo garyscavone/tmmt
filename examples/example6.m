@@ -28,13 +28,16 @@ end
 alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get  geometry data
+figure(1)
 fingering = 3;
+drawBore 'keefeFlute';
 [boreData, holeData] = keefeFlute( fingering );
 if isempty( boreData )
   return;
 end
 
 % Do TMM calculations and plot
+figure(2)
 plotTypes = [1 12];
 Zin = tmm( boreData, holeData, rho, c, k, alpha, endType );
 rzplot( f, Zin, plotTypes, true, false, [], 'b-', [], true); % with time-domain smoothing

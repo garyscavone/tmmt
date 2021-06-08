@@ -41,12 +41,15 @@ rzplot( f, Zin, plotTypes, true, false, [], 'r-');
 
 % Get second geometry data
 fingering = 0;
+figure(1)
+drawBore 'sevenSegments';
 [boreData, holeData] = sevenSegments( fingering );
 if isempty( boreData )
   return;
 end
 
 % Do second TMM calculations and plot
+figure(2)
 Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % cones & cylinders
 rzplot( f, Zin, plotTypes, true, true, [], 'b-'); % plot with initial hold on
 legend('Cylinders only', 'Cylinders / Cones');

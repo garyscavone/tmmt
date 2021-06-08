@@ -28,6 +28,8 @@ end
 alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get geometry data
+figure(1)
+drawBore 'sevenCylinders'
 fingering = 0;
 [boreData, holeData] = sevenCylinders( fingering );
 if isempty( boreData )
@@ -38,6 +40,7 @@ end
 Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % ideally open end
 
 % Plot result using rzplot script
+figure(2)
 rzplot( f, Zin, 1, true);
 title('Seven cylinder structure.')
 ylim([-100 100])
