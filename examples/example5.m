@@ -37,7 +37,7 @@ end
 % Do first TMM calculations and plot
 plotTypes = [1 5];
 Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % cylinders
-rzplot( f, Zin, plotTypes, true, false, [], 'r-');
+rzplot( f, Zin, plotTypes, true, true, [], 'r-');
 
 % Get second geometry data
 fingering = 0;
@@ -51,7 +51,7 @@ end
 % Do second TMM calculations and plot
 figure(2)
 Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % cones & cylinders
-rzplot( f, Zin, plotTypes, true, true, [], 'b-'); % plot with initial hold on
+rzplot( f, Zin, plotTypes, true, false, [], 'b-'); % plot with initial hold on
 legend('Cylinders only', 'Cylinders / Cones');
 subplot(numel(plotTypes), 1, 1)
 title('Input Impedance of 7 segment structure (lossy, Z_L unflanged)')

@@ -77,7 +77,7 @@ for n = 1:length(holeData(1,:))
   if lastx > (holeData(1,n) - holeData(2,n))
     counter = counter + 1;
     dscale = -1;
-    if ( mod( counter, 2 ) == 0 ) dscale = 1; end
+    if ( mod( counter, 2 ) == 0 ), dscale = 1; end
     mesh(xh+holeData(1,n), dscale*(ra+zh*t), yh);
     fill3(xh(2,:)+holeData(1,n), dscale*(ra+zh(2,:)*t), yh(2,:), fillcolor);
   else
@@ -85,7 +85,7 @@ for n = 1:length(holeData(1,:))
     mesh(xh+holeData(1,n), yh, ra+zh*t);
     fill3(xh(2,:)+holeData(1,n), yh(2,:), ra+zh(2,:)*t, fillcolor);
     lastx = holeData(1,n) + holeData(2,n);
-  end
+   end
 end
 
 hold off
