@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2021 (Released January 1, 2021) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>A Finite Length Cylindrical Pipe</TITLE>
+<META NAME="description" CONTENT="A Finite Length Cylindrical Pipe">
+<META NAME="keywords" CONTENT="asa2021">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2021">
+
+<LINK REL="STYLESHEET" HREF="asa2021.css">
+
+<LINK REL="next" HREF="node3.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation">
+<A
+ HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node3.html">Cascaded Cylindrical Sections</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node1.html">Overview</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00020000000000000000">
+A Finite Length Cylindrical Pipe</A>
+</H1>
+
+<P>
+
+<DIV class="CENTER"><A ID="35"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 1:</STRONG>
+A cylindrical pipe segment.</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 36.58ex; " SRC="img6.png"
+ ALT="\begin{figure}\begin{center}
+\begin{picture}(4,2)
+\put(0.0,0.4){\epsfig{file=f...
+...0.27,0.2){$x=0$}
+\put(3.07,0.2){$x=L$}
+\end{picture} \end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<UL>
+<LI>Assuming a finite length pipe with plane waves propagating along its length in both directions (right- and left-going traveling waves), we can describe a sinusoidal pressure disturbance at position <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.12ex; vertical-align: -0.12ex; " SRC="img7.png"
+ ALT="$x$"></SPAN> by
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+P(x,t) = \left[C^{+}e^{-jkx} + C^{-}e^{jkx}\right] e^{j\omega t},
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 3.01ex; vertical-align: -0.84ex; " SRC="img8.png"
+ ALT="$\displaystyle P(x,t) = \left[C^{+}e^{-jkx} + C^{-}e^{jkx}\right] e^{j\omega t},
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">1</SPAN>)</SPAN>
+</DIV>
+where <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.12ex; " SRC="img9.png"
+ ALT="$C^{+}$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.75ex; vertical-align: -0.12ex; " SRC="img10.png"
+ ALT="$C^{-}$"></SPAN> are complex amplitudes, <!-- MATH
+ $k = \omega / c$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img11.png"
+ ALT="$k = \omega / c$"></SPAN> is the lossless wave number, <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.12ex; vertical-align: -0.12ex; " SRC="img12.png"
+ ALT="$\omega$"></SPAN> is radian frequency and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.12ex; vertical-align: -0.12ex; " SRC="img13.png"
+ ALT="$c$"></SPAN> is the speed of sound.
+
+<P>
+</LI>
+<LI>Pressure and volume velocity in a cylindrical pipe are related by
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\ensuremath{\frac{\partial {p}}{\partial {x}}} = - \frac{\rho}{A} \ensuremath{\frac{\partial {u}}{\partial {t}}},
+\end{equation}
+ -->
+ &nbsp;  <A ID="eq:newton"></A><IMG
+ STYLE="height: 4.97ex; vertical-align: -1.71ex; " SRC="img14.png"
+ ALT="$\displaystyle \ensuremath{\frac{\partial {p}}{\partial {x}}} = - \frac{\rho}{A} \ensuremath{\frac{\partial {u}}{\partial {t}}},
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">2</SPAN>)</SPAN>
+</DIV>
+where <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.68ex; vertical-align: -0.02ex; " SRC="img15.png"
+ ALT="$A$"></SPAN> is the cross-sectional area of the pipe and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.61ex; vertical-align: -0.57ex; " SRC="img16.png"
+ ALT="$\rho$"></SPAN> is the mass density of air.
+
+<P>
+</LI>
+<LI>From Eq.&nbsp;(<A HREF="#eq:newton">2</A>), the corresponding volume velocity is found to be
+<BR>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{eqnarray}
+U(x,t) &=& \left(\frac{A}{\rho c}\right)\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t}, \nonumber \\
+&=& \frac{1}{Z_{c}}\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t},
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img17.png"
+ ALT="$\displaystyle U(x,t)$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img19.png"
+ ALT="$\displaystyle \left(\frac{A}{\rho c}\right)\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t},$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+&nbsp;</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.18ex; vertical-align: -2.06ex; " SRC="img20.png"
+ ALT="$\displaystyle \frac{1}{Z_{c}}\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t},$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">3</SPAN>)</TD></TR>
+</TABLE></DIV>
+where <!-- MATH
+ $Z_{c} = \rho c / A$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img21.png"
+ ALT="$Z_{c} = \rho c / A$"></SPAN> is the characteristic or wave impedance.
+
+<P>
+</LI>
+<LI>If the pipe is terminated at <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.68ex; vertical-align: -0.12ex; " SRC="img22.png"
+ ALT="$x=L$"></SPAN> by the load impedance <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img23.png"
+ ALT="$Z_{L}$"></SPAN>, the impedance at <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.61ex; vertical-align: -0.12ex; " SRC="img24.png"
+ ALT="$x=0$"></SPAN>, or the <SPAN  CLASS="textit">input impedance</SPAN> of the cylindrical tube, can then be found as
+<BR>
+<DIV CLASS="displaymath"><A ID="eq:zin"></A>
+<!-- MATH
+ \begin{eqnarray}
+Z_{in} = \frac{P(0,t)}{U(0,t)} &=& Z_{c}\left[\frac{C^{+} + C^{-}}{C^{+} - C^{-}}\right] \\
+&=& Z_{c}\left[\frac{Z_{L} \cos (kL) + j Z_{c} \sin(kL)}{jZ_{L} \sin(kL) + Z_{c} \cos(kL)}\right].
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 5.53ex; vertical-align: -2.20ex; " SRC="img25.png"
+ ALT="$\displaystyle Z_{in} = \frac{P(0,t)}{U(0,t)}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img26.png"
+ ALT="$\displaystyle Z_{c}\left[\frac{C^{+} + C^{-}}{C^{+} - C^{-}}\right]$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">4</SPAN>)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.67ex; vertical-align: -2.23ex; " SRC="img27.png"
+ ALT="$\displaystyle Z_{c}\left[\frac{Z_{L} \cos (kL) + j Z_{c} \sin(kL)}{jZ_{L} \sin(kL) + Z_{c} \cos(kL)}\right].$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">5</SPAN>)</TD></TR>
+</TABLE></DIV>
+
+<P>
+</LI>
+<LI>Thus, if we know the length and radius of a cylindrical pipe, as well as an expression for the load impedance <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img23.png"
+ ALT="$Z_{L}$"></SPAN> at its output end, we can compute its input impedance <SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.03ex; vertical-align: -0.46ex; " SRC="img28.png"
+ ALT="$Z_{in}$"></SPAN>.
+
+<P>
+</LI>
+<LI>This expression can also be formulated in terms of a <SPAN  CLASS="textit">transfer matrix</SPAN> (<A ID="tex2html28" target="contents"
+  HREF="node11.html#keefe:thesis">Keefe, 1981</A>; <A ID="tex2html29" target="contents"
+  HREF="node11.html#plitnik:oboe">Plitnik and Strong, 1979</A>) that relates pressure and volume velocity at the input and output of a cylindrical section of length <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.61ex; vertical-align: -0.02ex; " SRC="img29.png"
+ ALT="$L$"></SPAN> as
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\left[\begin{array}{c} P_{0} \\U_{0} \end{array}\right] = \left[\begin{array}{cc} a & b \\c & d \end{array}\right] \left[\begin{array}{c} P_{L} \\U_{L} \end{array}\right],
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img30.png"
+ ALT="$\displaystyle \left[\begin{array}{c} P_{0} \\ U_{0} \end{array}\right] = \left[...
+...d \end{array}\right] \left[\begin{array}{c} P_{L} \\ U_{L} \end{array}\right],
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">6</SPAN>)</SPAN>
+</DIV>
+where the lossless transfer-matrix coefficients are given by
+
+<P>
+<DIV class=CENTER>
+<!-- MATH
+ \begin{eqnarray*}
+a &=& \cos(kL) \\b &=& j Z_{c} \sin(kL) \\c &=& \frac{j}{Z_{c}}\sin(kL) \\d &=& \cos(kL).
+\end{eqnarray*}
+ -->
+<IMG
+ STYLE="height: 15.11ex; " SRC="img31.png"
+ ALT="\begin{eqnarray*}
+a &amp;=&amp; \cos(kL) \\ b &amp;=&amp; j Z_{c} \sin(kL) \\ c &amp;=&amp; \frac{j}{Z_{c}}\sin(kL) \\ d &amp;=&amp; \cos(kL).
+\end{eqnarray*}"></DIV>
+
+<P>
+</LI>
+<LI>By comparison with Eq.&nbsp;(<A HREF="#eq:zin">5</A>), the input impedance of the section can be calculated from the transfer-matrix coefficients as
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+Z_{in} = \frac{b + aZ_{L}}{d + cZ_{L}}.
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 5.18ex; vertical-align: -1.96ex; " SRC="img32.png"
+ ALT="$\displaystyle Z_{in} = \frac{b + aZ_{L}}{d + cZ_{L}}.
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">7</SPAN>)</SPAN>
+</DIV>
+
+<P>
+</LI>
+<LI>We can approximate an open end at <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.68ex; vertical-align: -0.12ex; " SRC="img22.png"
+ ALT="$x=L$"></SPAN> with <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img33.png"
+ ALT="$Z_{L} = 0$"></SPAN>, resulting in 
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+Z_{in} = jZ_{c}\tan(kL).
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img34.png"
+ ALT="$\displaystyle Z_{in} = jZ_{c}\tan(kL).
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">8</SPAN>)</SPAN>
+</DIV>
+
+<P>
+</LI>
+<LI>We can approximate a closed end at <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.68ex; vertical-align: -0.12ex; " SRC="img22.png"
+ ALT="$x=L$"></SPAN> with <!-- MATH
+ $Z_{L} = \infty$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img35.png"
+ ALT="$Z_{L} = \infty$"></SPAN>, resulting in
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+Z_{in} = -jZ_{c}\cot(kL).
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img36.png"
+ ALT="$\displaystyle Z_{in} = -jZ_{c}\cot(kL).
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">9</SPAN>)</SPAN>
+</DIV>
+
+<P>
+</LI>
+<LI>The Matlab <SPAN  CLASS="texttt">example1.m</SPAN> script in the <A ID="tex2html3"
+  HREF="https://github.com/garyscavone/tmmt"><SPAN  CLASS="textbf">tmmt</SPAN></A>
+github repository makes use of the <SPAN  CLASS="texttt">tmm.m, tmmCylinder.m</SPAN> and <SPAN  CLASS="texttt">physicalSetting.m</SPAN> scripts to produce the plots below.
+
+<P>
+
+<DIV class="CENTER"><A ID="142"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 2:</STRONG>
+Input impedance magnitude for 60 cm cylindrical pipe with no losses and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img1.png"
+ ALT="$Z_L = 0$"></SPAN> (left) and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img2.png"
+ ALT="$Z_L = \infty $"></SPAN> (right).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 43.50ex; " SRC="img37.png"
+ ALT="\begin{figure}\begin{center}
+\epsfig{file = figures/Zin60cmlosslessZl0.eps,widt...
+...{file = figures/Zin60cmlosslessZlnan.eps,width=3in}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A
+ HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node3.html">Cascaded Cylindrical Sections</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node1.html">Overview</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<table><tr><td><a href="https://acousticalsociety.org/asa-meetings/">
+<img src="ASA21Virtual.jpg" width=60 border=0 alt="ASA 2021"></a>
+<td>Presented at the 180th Meeting of the Acoustical Society of America, 8-10 June 2021 by <a href="http://www.music.mcgill.ca/~gary/">Gary P. Scavone</a>.</td>
+<td align=right><img src="mcgill.gif" width=150 border=0></td>
+<td align=right><img src="caml-gray.jpg" width=50 border=0></td>
+</table>
+
+
+</ADDRESS>
+</BODY>
+</HTML>
