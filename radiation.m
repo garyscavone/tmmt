@@ -21,6 +21,10 @@ function Zr = radiation( k, a, type )
 % 3. H. Levine and J. Schwinger, "On the radiation of sound from an
 %      unflanged circular pipe," Phys. Rev., 73(4), pp. 383-406, 1948.
 %
+% 4. A.N. Norris and I.C. Sheng. "Acoustic radiation from a circular pipe
+%      with an infinite flange." Journal of Sound and Vibration, Vol. 135,
+%      pp. 85-93, 1989.
+%
 % Generally, Zr = Zc*(1+R)/(1-R), where R is the reflection coefficient for
 % the open end of a pipe and Zc is the characteristic impedance.  R can
 % also be expressed as:
@@ -37,7 +41,42 @@ end
 ka = k*a;
 ka2 = ka.^2;
 
-if strcmp( type, 'UnflangedDalmont' )
+if strcmp( type, 'unflanged' )
+  % The Levine & Schwinger results are calculated by numerical
+  % integrations. Eq. (VI.5) of Levine and Schwinger is used to calculate
+  % the reflection coefficient magnitude.
+  intvi5 = @(x, z) atan(besselk(1, x)./(pi*besseli(1, x))) ...
+    .*(1 - z./sqrt(z^2 + x.^2)).*(1./x);
+
+  if ka(1) == 0, ka(1) = eps; end % avoid division by 0
+  sum1 = zeros(size(ka));
+  for n=1:length(ka)
+    sum1(n) = integral(@(x)intvi5(x, ka(n)), 0, 20); % upper limit determined empirically
+  end
+  r = (pi*ka).^(0.5).*exp(-ka+(sum1./pi));
+  
+  % First and second integrals in Eq. (VI.4) of Levine and Schwinger, used
+  % to calculate the length correction.
+  intvi4a = @(x, z) log(pi*abs(besselj(1,x)).*sqrt(besselj(1,x).^2 + ...
+    bessely(1,x).^2))./(x.*sqrt(z^2 - x.^2));
+  intvi4b = @(x, z) log(1./(2*besseli(1,x).*besselk(1,x))) ...
+    ./(x.*sqrt(x.^2 + z^2));
+
+  warning('off'); % turn off warning about integration interval if ka(1) close to zero.
+  sum2 = zeros(size(ka));
+  for n=1:length(ka)
+    sum2(n) = integral(@(x)intvi4a(x, ka(n)), 0, ka(n));
+  end
+  sum3 = zeros(size(ka));
+  for n=1:length(ka)
+    sum3(n) = integral(@(x)intvi4b(x, ka(n)), 0, 600); % upper limit determined empirically
+  end
+  warning('on')
+  loa = (sum2+sum3)./pi;
+  R = -r.*exp(-2*1i*ka.*loa);
+  Zr = (1 + R) ./ (1 - R);
+
+elseif strcmp( type, 'UnflangedDalmont' )
   
   % Unflanged pipe radiation impedance approximation (ka < 1.5) from
   % reference [1].
