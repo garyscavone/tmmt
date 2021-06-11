@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2021 (Released January 1, 2021) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Cascaded Cylindrical Sections</TITLE>
+<META NAME="description" CONTENT="Cascaded Cylindrical Sections">
+<META NAME="keywords" CONTENT="asa2021">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2021">
+
+<LINK REL="STYLESHEET" HREF="asa2021.css">
+
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation">
+<A
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node4.html">Acoustic Losses</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node2.html">A Finite Length Cylindrical Pipe</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00030000000000000000">
+Cascaded Cylindrical Sections</A>
+</H1>
+
+<P>
+
+<DIV class="CENTER"><A ID="fig:cylapprox"></A><A ID="154"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 3:</STRONG>
+A non-uniform bore (a) and its approximation in terms of cylindrical sections (b).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 48.33ex; " SRC="img38.png"
+ ALT="\begin{figure}\begin{center}
+\begin{picture}(4,2.7)
+\put(0,0.25){\epsfig{file ...
+...4in}}
+\put(2,1.4){(a)}
+\put(2,0){(b)}
+\end{picture} \end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<UL>
+<LI>For a sequence of <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.12ex; vertical-align: -0.12ex; " SRC="img39.png"
+ ALT="$n$"></SPAN> cylindrical sections, the input variables for each section become the output variables for the previous section.  The transfer matrices can then be cascaded as
+<BR>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{eqnarray}
+\left[\begin{array}{c} P_{0} \\U_{0} \end{array}\right] &=& \left[\begin{array}{cc} a_{1} & b_{1} \\c_{1} & d_{1} \end{array}\right] \left[\begin{array}{cc} a_{2} & b_{2} \\c_{2} & d_{2} \end{array}\right] \cdots \left[\begin{array}{cc} a_{n} & b_{n} \\c_{n} & d_{n} \end{array}\right] \left[\begin{array}{c} P_{L} \\U_{L} \end{array}\right] \nonumber \\
+&=& \left[\begin{array}{cc} A & B \\C & D \end{array}\right] \left[\begin{array}{c} P_{L} \\U_{L} \end{array}\right]
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img40.png"
+ ALT="$\displaystyle \left[\begin{array}{c} P_{0} \\  U_{0} \end{array}\right]$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img41.png"
+ ALT="$\displaystyle \left[\begin{array}{cc} a_{1} &amp; b_{1} \\  c_{1} &amp; d_{1} \end{arra...
+...n} \end{array}\right] \left[\begin{array}{c} P_{L} \\  U_{L} \end{array}\right]$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+&nbsp;</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img42.png"
+ ALT="$\displaystyle \left[\begin{array}{cc} A &amp; B \\  C &amp; D \end{array}\right] \left[\begin{array}{c} P_{L} \\  U_{L} \end{array}\right]$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">10</SPAN>)</TD></TR>
+</TABLE></DIV>
+where
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\left[\begin{array}{cc} A & B \\C & D \end{array}\right] = \prod_{i = 1}^{n} \left[\begin{array}{cc} a_{i} & b_{i} \\c_{i} & d_{i} \end{array}\right],
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 6.43ex; vertical-align: -2.79ex; " SRC="img43.png"
+ ALT="$\displaystyle \left[\begin{array}{cc} A &amp; B \\ C &amp; D \end{array}\right] = \prod...
+...{n} \left[\begin{array}{cc} a_{i} &amp; b_{i} \\ c_{i} &amp; d_{i} \end{array}\right],
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">11</SPAN>)</SPAN>
+</DIV>
+and the input impedance found for the entire acoustic structure as
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+Z_{in} = \frac{B + AZ_{L}}{D + CZ_{L}}.
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 5.25ex; vertical-align: -1.96ex; " SRC="img44.png"
+ ALT="$\displaystyle Z_{in} = \frac{B + AZ_{L}}{D + CZ_{L}}.
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">12</SPAN>)</SPAN>
+</DIV>
+
+<P>
+
+<DIV class="CENTER"><A ID="554"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 4:</STRONG>
+Input impedance magnitude for 7 cylindrical segment structure with no losses and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img1.png"
+ ALT="$Z_L = 0$"></SPAN> (see <SPAN  CLASS="texttt">example2.m</SPAN> script).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 44.06ex; " SRC="img45.png"
+ ALT="\begin{figure}\begin{center}
+\epsfig{file = figures/Zin7cylinderlosslessZl0.eps,width=3in}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<table><tr><td><a href="https://acousticalsociety.org/asa-meetings/">
+<img src="ASA21Virtual.jpg" width=60 border=0 alt="ASA 2021"></a>
+<td>Presented at the 180th Meeting of the Acoustical Society of America, 8-10 June 2021 by <a href="http://www.music.mcgill.ca/~gary/">Gary P. Scavone</a>.</td>
+<td align=right><img src="mcgill.gif" width=150 border=0></td>
+<td align=right><img src="caml-gray.jpg" width=50 border=0></td>
+</table>
+
+
+</ADDRESS>
+</BODY>
+</HTML>

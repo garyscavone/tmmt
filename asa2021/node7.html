@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2021 (Released January 1, 2021) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Side Branches or Toneholes</TITLE>
+<META NAME="description" CONTENT="Side Branches or Toneholes">
+<META NAME="keywords" CONTENT="asa2021">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2021">
+
+<LINK REL="STYLESHEET" HREF="asa2021.css">
+
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation">
+<A
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node8.html">External Tonehole Interactions</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node6.html">Conical Segments</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00070000000000000000">
+Side Branches or Toneholes</A>
+</H1>
+
+<P>
+
+<DIV class="CENTER"><A ID="365"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 10:</STRONG>
+A single tonehole unit.</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 26.72ex; " SRC="img66.png"
+ ALT="\begin{figure}\begin{center}
+\epsfig{file = figures/tonehole.eps,width=3in}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<UL>
+<LI>The fundamental acoustic properties of toneholes have been extensively studied and reported by <A ID="tex2html32" target="contents"
+  HREF="node11.html#nederveen:sidehole">Nederveen et&nbsp;al. (1998)</A>; <A ID="tex2html33" target="contents"
+  HREF="node11.html#keefe:thesis">Keefe (1981)</A>; <A ID="tex2html34" target="contents"
+  HREF="node11.html#dalmont:sidehole">Dalmont et&nbsp;al. (2002)</A>; <A ID="tex2html35" target="contents"
+  HREF="node11.html#keefe:models">Keefe (1990)</A>; <A ID="tex2html36" target="contents"
+  HREF="node11.html#dubos:sidehole">Dubos et&nbsp;al. (1999)</A>; <A ID="tex2html37" target="contents"
+  HREF="node11.html#lefebvre:jasafem">Lefebvre and Scavone (2012)</A>.
+
+<P>
+</LI>
+<LI>The model described by <A
+ HREF="node11.html#keefe:models">Keefe (1990)</A> is an accurate representation for a tonehole unit, assuming adjacent tonehole interactions are negligible.
+
+<P>
+</LI>
+<LI>Keefe's original derivation of the tonehole parameters was based on a symmetric <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.61ex; vertical-align: -0.02ex; " SRC="img4.png"
+ ALT="$T$"></SPAN> section of serieis and shunt impedance terms, as shown in Fig.&nbsp;<A HREF="#fig:toneholeTrans">11</A> (<A
+ HREF="node11.html#keefe:thesis">Keefe, 1981</A>).
+
+<P>
+
+<DIV class="CENTER"><A ID="fig:toneholeTrans"></A><A ID="385"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 11:</STRONG>
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.61ex; vertical-align: -0.02ex; " SRC="img4.png"
+ ALT="$T$"></SPAN> section transmission-line representation of the tonehole.</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 23.15ex; " SRC="img67.png"
+ ALT="\begin{figure}\begin{center}
+\begin{picture}(3,1.2)
+\put(0,0){\epsfig{file = f...
+...95){$Z_{a}/2$}
+\put(1.43,0.47){$Z_{s}$}
+\end{picture} \end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>The series impedance terms, <SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.10ex; vertical-align: -0.47ex; " SRC="img68.png"
+ ALT="$Z_{a},$"></SPAN> correspond to negative length corrections because the hole effectively reduces the air column length on either side.
+
+<P>
+</LI>
+<LI>The shunt impedance term, <SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.10ex; vertical-align: -0.47ex; " SRC="img69.png"
+ ALT="$Z_{s},$"></SPAN> characterizes the properties of the branch itself.
+
+<P>
+</LI>
+<LI>The transfer matrix that results under this analysis is given by
+  <BR>
+<BR>
+<DIV CLASS="displaymath"><A ID="eq:symtransmatrix"></A>
+<!-- MATH
+ \begin{eqnarray}
+\left[\begin{array}{c} P_{1} \\U_{1} \end{array}\right] &=& \left[\begin{array}{cc} 1 & Z_{a}/2 \\0 & 1 \end{array}\right] \left[\begin{array}{cc} 1 & 0 \\Z_{s}^{-1} & 1 \end{array}\right] \left[\begin{array}{cc} 1 & Z_{a}/2 \\0 & 1 \end{array}\right] \left[\begin{array}{c} P_{2} \\U_{2} \end{array}\right] \nonumber \\
+&=& \left[\begin{array}{cc} 1 + \frac{Z_{a}}{2 Z_{s}} & Z_{a} \left(1 + \frac{Z_{a}}{4 Z_{s}}\right) \\Z_{s}^{-1} & 1 + \frac{Z_{a}}{2 Z_{s}} \end{array}\right] \left[\begin{array}{c} P_{2} \\U_{2} \end{array}\right].
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img70.png"
+ ALT="$\displaystyle \left[\begin{array}{c} P_{1} \\  U_{1} \end{array}\right]$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img71.png"
+ ALT="$\displaystyle \left[\begin{array}{cc} 1 &amp; Z_{a}/2 \\  0 &amp; 1 \end{array}\right] ...
+... 1 \end{array}\right] \left[\begin{array}{c} P_{2} \\  U_{2} \end{array}\right]$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+&nbsp;</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 7.41ex; vertical-align: -3.17ex; " SRC="img72.png"
+ ALT="$\displaystyle \left[\begin{array}{cc} 1 + \frac{Z_{a}}{2 Z_{s}} &amp; Z_{a} \left(1...
+...} \end{array}\right] \left[\begin{array}{c} P_{2} \\  U_{2} \end{array}\right].$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">16</SPAN>)</TD></TR>
+</TABLE></DIV>
+obtained by cascading the three matrices that correspond to the three impedance terms.
+
+<P>
+</LI>
+<LI>Based on the approximation that <!-- MATH
+ $|Z_{a}/Z_{s}| \ll 1,$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img73.png"
+ ALT="$\vert Z_{a}/Z_{s}\vert \ll 1,$"></SPAN> Eq.&nbsp;(<A HREF="#eq:symtransmatrix">16</A>) can be reduced to the form
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\left[\begin{array}{c} P_{1} \\U_{1} \end{array}\right] = \left[\begin{array}{cc} 1 & Z_{a} \\Z_{s}^{-1} & 1 \end{array}\right] \left[\begin{array}{c} P_{2} \\U_{2} \end{array}\right],
+\end{equation}
+ -->
+ &nbsp;  <A ID="eq:toneholematrix"></A><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img74.png"
+ ALT="$\displaystyle \left[\begin{array}{c} P_{1} \\ U_{1} \end{array}\right] = \left[...
+...1 \end{array}\right] \left[\begin{array}{c} P_{2} \\ U_{2} \end{array}\right],
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">17</SPAN>)</SPAN>
+</DIV>
+which is the basic tonehole unit cell given by <A
+ HREF="node11.html#keefe:thesis">Keefe (1981)</A> for transfer-matrix calculations.
+
+<P>
+</LI>
+<LI>The values of <SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.03ex; vertical-align: -0.46ex; " SRC="img75.png"
+ ALT="$Z_{a}$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.03ex; vertical-align: -0.46ex; " SRC="img76.png"
+ ALT="$Z_{s}$"></SPAN> vary according to whether the tonehole is open (o) or closed (c) as
+<BR>
+<BR>
+<DIV CLASS="displaymath"><A ID="eq:zso"></A><A ID="eq:zsc"></A><A ID="eq:zac"></A>
+<!-- MATH
+ \begin{eqnarray}
+Z_{s}^{(o)} &=& Z_{c}(a/b)^2 \,\left(jkt_{e} + \xi_{e}\right),
+\\
+Z_{s}^{(c)} &=& -jZ_{c}(a/b)^2\cot(kt),\\
+Z_{a}^{(o)} &=& -jZ_{c}(a/b)^2 kt_{a}^{(o)}, \\
+Z_{a}^{(c)} &=& -jZ_{c}(a/b)^2 kt_{a}^{(c)}.
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.87ex; vertical-align: -0.69ex; " SRC="img77.png"
+ ALT="$\displaystyle Z_{s}^{(o)}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 2.66ex; vertical-align: -0.60ex; " SRC="img78.png"
+ ALT="$\displaystyle Z_{c}(a/b)^2 \,\left(jkt_{e} + \xi_{e}\right),$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">18</SPAN>)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.87ex; vertical-align: -0.69ex; " SRC="img79.png"
+ ALT="$\displaystyle Z_{s}^{(c)}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 2.66ex; vertical-align: -0.60ex; " SRC="img80.png"
+ ALT="$\displaystyle -jZ_{c}(a/b)^2\cot(kt),$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">19</SPAN>)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.87ex; vertical-align: -0.69ex; " SRC="img81.png"
+ ALT="$\displaystyle Z_{a}^{(o)}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 2.87ex; vertical-align: -0.70ex; " SRC="img82.png"
+ ALT="$\displaystyle -jZ_{c}(a/b)^2 kt_{a}^{(o)},$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">20</SPAN>)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.87ex; vertical-align: -0.69ex; " SRC="img83.png"
+ ALT="$\displaystyle Z_{a}^{(c)}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ STYLE="height: 0.63ex; vertical-align: 0.26ex; " SRC="img18.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 2.87ex; vertical-align: -0.70ex; " SRC="img84.png"
+ ALT="$\displaystyle -jZ_{c}(a/b)^2 kt_{a}^{(c)}.$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">21</SPAN>)</TD></TR>
+</TABLE></DIV>
+
+<P>
+</LI>
+<LI>Definitions and descriptions of the various parameters in Eqs.&nbsp;(<A HREF="#eq:zso">18</A>) &ndash; (<A HREF="#eq:zac">21</A>) can be found in (<A
+ HREF="node11.html#keefe:models">Keefe, 1990</A>). More recent characterizations are found in (<A ID="tex2html38" target="contents"
+  HREF="node11.html#lefebvre:jasafem">Lefebvre and Scavone, 2012</A>; <A ID="tex2html39" target="contents"
+  HREF="node11.html#dalmont:sidehole">Dalmont et&nbsp;al., 2002</A>).
+
+<P>
+
+<DIV class="CENTER"><A ID="583"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 12:</STRONG>
+Impedance magnitude and corresponding reflection function for six-hole flute (top 3 holes closed) defined in (<A
+ HREF="node11.html#keefe:models">Keefe, 1990</A>) (see <SPAN  CLASS="texttt">example6.m</SPAN> script).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 42.94ex; " SRC="img85.png"
+ ALT="\begin{figure}\begin{center}
+\epsfig{file = figures/Keefefluteplot.eps,width=3in}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node8.html">External Tonehole Interactions</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node6.html">Conical Segments</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<table><tr><td><a href="https://acousticalsociety.org/asa-meetings/">
+<img src="ASA21Virtual.jpg" width=60 border=0 alt="ASA 2021"></a>
+<td>Presented at the 180th Meeting of the Acoustical Society of America, 8-10 June 2021 by <a href="http://www.music.mcgill.ca/~gary/">Gary P. Scavone</a>.</td>
+<td align=right><img src="mcgill.gif" width=150 border=0></td>
+<td align=right><img src="caml-gray.jpg" width=50 border=0></td>
+</table>
+
+
+</ADDRESS>
+</BODY>
+</HTML>

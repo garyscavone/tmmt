@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2021 (Released January 1, 2021) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Conical Segments</TITLE>
+<META NAME="description" CONTENT="Conical Segments">
+<META NAME="keywords" CONTENT="asa2021">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2021">
+
+<LINK REL="STYLESHEET" HREF="asa2021.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation">
+<A
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node7.html">Side Branches or Toneholes</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node5.html">Load Impedance Approximations</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00060000000000000000">
+Conical Segments</A>
+</H1>
+
+<P>
+
+<DIV class="CENTER"><A ID="fig:cone"></A><A ID="280"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 7:</STRONG>
+A conical segment.</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 33.22ex; " SRC="img55.png"
+ ALT="\begin{figure}\begin{center}
+\begin{picture}(3,1.8)
+% put(0,0.13)\{ scalebox\{0...
+...
+\put(1.26,0.87){\footnotesize$r_{1}$}
+\end{picture} \end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<UL>
+<LI>The process outlined earlier to derive the transfer matrix for a cylinder can be repeated for a conical segment. The result is more complicated due to the fact that the characteristic impedance for spherical waves is frequency- and position-dependent.
+  <BR>
+<BR>
+</LI>
+<LI>The conical transfer matrix can be found as (<A ID="tex2html30" target="contents"
+  HREF="node11.html#lefebvre:aaua2013">Lefebvre et&nbsp;al. (2013)</A>; <A ID="tex2html31" target="contents"
+  HREF="node11.html#chaigne:acoustics">Chaigne and Kergomard (2013)</A>):
+  
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\mathbf{T}_{cone} = \left[\begin{array}{cc}
+        (r_{2}/r_{1})\cos(k_{c}L) - \sin(k_{c}L)/{kx_{1}} & jZ_{c}\sin(k_{c}L) \\
+        Z_{c}^{-1}\left[ j(1+(k^{2}x_{1}x_{2})^{-1})\sin {(k}_{c}{L)}%
++(x_{1}^{-1}-x_{2}^{-1})\cos {(k}_{c}{L)}/jk\right] & (r_{1}/r_{2})\cos {(k}%
+_{c}{L)}+\sin {(k}_{c}{L)}/{kx_{2}} \end{array}\right]
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 5.67ex; vertical-align: -2.27ex; " SRC="img56.png"
+ ALT="$\displaystyle \mathbf{T}_{cone} = \left[\begin{array}{cc}
+(r_{2}/r_{1})\cos(k_...
+...(r_{1}/r_{2})\cos {(k}%
+_{c}{L)}+\sin {(k}_{c}{L)}/{kx_{2}} \end{array}\right]
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">14</SPAN>)</SPAN>
+</DIV>
+where <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.40ex; vertical-align: -0.37ex; " SRC="img57.png"
+ ALT="$r_{1}$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.40ex; vertical-align: -0.37ex; " SRC="img58.png"
+ ALT="$r_{2}$"></SPAN> are the radii at the input and output planes,
+respectively, and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.40ex; vertical-align: -0.37ex; " SRC="img59.png"
+ ALT="$x_{1}$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.40ex; vertical-align: -0.37ex; " SRC="img60.png"
+ ALT="$x_{2}$"></SPAN> are the distances between the apex of
+the cone and the input and output planes, <!-- MATH
+ $Z_{c}=\rho c/(\pi r_{1}r_{2})$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img61.png"
+ ALT="$Z_{c}=\rho c/(\pi r_{1}r_{2})$"></SPAN>
+and <!-- MATH
+ $k_{c}=-j\Gamma$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.10ex; vertical-align: -0.47ex; " SRC="img62.png"
+ ALT="$k_{c}=-j\Gamma $"></SPAN> is the complex wavenumber. In this case, losses are
+evaluated at the equivalent radius (<A
+ HREF="node11.html#chaigne:acoustics">Chaigne and Kergomard, 2013</A>):
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+r_{eq}=L\frac{r_{1}}{x_{1}}\frac{1}{\ln {(1+L/x_{1})}}.
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 5.32ex; vertical-align: -2.20ex; " SRC="img63.png"
+ ALT="$\displaystyle r_{eq}=L\frac{r_{1}}{x_{1}}\frac{1}{\ln {(1+L/x_{1})}}.
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">15</SPAN>)</SPAN>
+</DIV>
+
+<P>
+</LI>
+<LI>The combination of cylindrical and conical segments can better approximate the actual geometry of an arbitrary structure, as seen in Fig.&nbsp;<A HREF="#fig:coneapprox">8</A>.
+
+<DIV class="CENTER"><A ID="fig:coneapprox"></A><A ID="350"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 8:</STRONG>
+A non-uniform bore (a) and its approximation in terms of cylindrical and conical sections (b).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 48.33ex; " SRC="img64.png"
+ ALT="\begin{figure}\begin{center}
+\begin{picture}(4,2.7)
+\put(0,0.25){\epsfig{file ...
+...4in}}
+\put(2,1.4){(a)}
+\put(2,0){(b)}
+\end{picture} \end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV class="CENTER"><A ID="568"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 9:</STRONG>
+Input impedance (top) and reflectance (bottom) magnitude for 7 segment structure with losses and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img3.png"
+ ALT="$Z_L$"></SPAN> unflanged, cylinders only vs. cylinders and cones (see <SPAN  CLASS="texttt">example5.m</SPAN> script).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 44.06ex; " SRC="img65.png"
+ ALT="\begin{figure}\begin{center}
+\epsfig{file = figures/Zin7segmentboth.eps,width=3in}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<table><tr><td><a href="https://acousticalsociety.org/asa-meetings/">
+<img src="ASA21Virtual.jpg" width=60 border=0 alt="ASA 2021"></a>
+<td>Presented at the 180th Meeting of the Acoustical Society of America, 8-10 June 2021 by <a href="http://www.music.mcgill.ca/~gary/">Gary P. Scavone</a>.</td>
+<td align=right><img src="mcgill.gif" width=150 border=0></td>
+<td align=right><img src="caml-gray.jpg" width=50 border=0></td>
+</table>
+
+
+</ADDRESS>
+</BODY>
+</HTML>

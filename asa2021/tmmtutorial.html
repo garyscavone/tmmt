@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2021 (Released January 1, 2021) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Finite Length Cylindrical Pipes</TITLE>
+<META NAME="description" CONTENT="Finite Length Cylindrical Pipes">
+<META NAME="keywords" CONTENT="asa2021">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2021">
+
+<LINK REL="STYLESHEET" HREF="asa2021.css">
+
+<LINK REL="next" HREF="node3.html">
+<LINK REL="previous" HREF="asa2021.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation">
+<A
+ HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node2.html">Cylindrical Sections</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="asa2021.html">Transfer Matrix Method Tutorial</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00010000000000000000">
+Finite Length Cylindrical Pipes</A>
+</H1>
+
+<UL>
+<LI>Assuming a finite length pipe with planar waves propagating along its length in both directions (right- and left-going traveling waves), we can describe a sinusoidal pressure disturbance at position <SPAN CLASS="MATH"><I>x</I></SPAN> by
+
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+P(x,t) = \left[C^{+}e^{-jkx} + C^{-}e^{jkx}\right] e^{j\omega t},
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 2.87ex; vertical-align: -0.93ex; " SRC="img1.png"
+ ALT="$\displaystyle P(x,t) = \left[C^{+}e^{-jkx} + C^{-}e^{jkx}\right] e^{j\omega t},
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">1</SPAN>)</SPAN>
+</DIV>
+where <SPAN CLASS="MATH"><I>C</I><SUP>+</SUP></SPAN> and <SPAN CLASS="MATH"><I>C</I><SUP>-</SUP></SPAN> are complex amplitudes.
+
+<P>
+</LI>
+<LI><FONT COLOR="#ff0000">**need to define k, discuss losses/dispersion and define k.
+</FONT>
+<P>
+<FONT COLOR="#ff0000">
+</FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>From Newton's law, pressure and volume velocity in a cylindrical pipe are related by
+</FONT></FONT>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\ensuremath{\frac{\partial {p}}{\partial {x}}} = - \frac{\rho}{A} \ensuremath{\frac{\partial {u}}{\partial {t}}},
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 4.83ex; vertical-align: -1.55ex; " SRC="img2.png"
+ ALT="$\displaystyle \ensuremath{\frac{\partial {p}}{\partial {x}}} = - \frac{\rho}{A} \ensuremath{\frac{\partial {u}}{\partial {t}}},
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">2</SPAN>)</SPAN>
+</DIV><FONT COLOR="#ff0000"><FONT COLOR="#000000">
+where 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>A</I></SPAN></FONT> is the cross-sectional area of the pipe and 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.47ex; vertical-align: -0.47ex; " SRC="img3.png"
+ ALT="\bgroup\color{red}$\rho$\egroup"></SPAN></FONT> is the mass density of air.
+</FONT></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>Thus, the corresponding volume velocity is found to be
+</FONT></FONT>
+<BR>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{eqnarray}
+U(x,t) &=& \left(\frac{A}{\rho c}\right)\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t} \nonumber \\
+&=& \frac{1}{Z_{c}}\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t}
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><I>U</I>(<I>x</I>,<I>t</I>)</TD>
+<TD ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.53ex; vertical-align: -2.16ex; " SRC="img4.png"
+ ALT="$\displaystyle \left(\frac{A}{\rho c}\right)\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t}$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+&nbsp;</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.04ex; vertical-align: -1.89ex; " SRC="img5.png"
+ ALT="$\displaystyle \frac{1}{Z_{c}}\left[C^{+}e^{-jkx} - C^{-}e^{jkx}\right] e^{j\omega t}$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">3</SPAN>)</TD></TR>
+</TABLE></DIV><FONT COLOR="#ff0000"></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>For a pipe which extends from 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>x</I>=0</SPAN></FONT> to 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>x</I>=<I>L</I></SPAN></FONT> and is terminated at 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>x</I>=<I>L</I></SPAN></FONT> by the load impedance 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>Z</I><SUB><I>L</I></SUB></SPAN></FONT>, the pressure wave reflectance is
+</FONT></FONT>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\frac{C^{-}}{C^{+}} = e^{-2jkL}\left[\frac{Z_{L} - Z_{c}}{Z_{L} + Z_{c}}\right].
+\end{equation}
+ -->
+ &nbsp;  <A ID="eq:chpt1:cylrefl"></A><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img6.png"
+ ALT="$\displaystyle \frac{C^{-}}{C^{+}} = e^{-2jkL}\left[\frac{Z_{L} - Z_{c}}{Z_{L} + Z_{c}}\right].
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">4</SPAN>)</SPAN>
+</DIV><FONT COLOR="#ff0000"></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>The load impedance 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>Z</I><SUB><I>L</I></SUB></SPAN></FONT> characterizes sound reflection and radiation at the end of the pipe.
+</FONT></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>The impedance at 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>x</I>=0,</SPAN></FONT> or the <SPAN  CLASS="textit">input impedance</SPAN> of the cylindrical tube, is given by
+</FONT></FONT>
+<BR>
+<DIV CLASS="displaymath"><A ID="eq:chpt1:zin"></A>
+<!-- MATH
+ \begin{eqnarray}
+Z_{in} = \frac{P(0,t)}{U(0,t)} &=& Z_{c}\left[\frac{C^{+} + C^{-}}{C^{+} - C^{-}}\right] \\
+&=& Z_{c}\left[\frac{Z_{L} \cos (kL) + j Z_{c} \sin(kL)}{jZ_{L} \sin(kL) + Z_{c} \cos(kL)}\right].
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 5.46ex; vertical-align: -2.13ex; " SRC="img7.png"
+ ALT="$\displaystyle Z_{in} = \frac{P(0,t)}{U(0,t)}$"></TD>
+<TD ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.67ex; vertical-align: -2.16ex; " SRC="img8.png"
+ ALT="$\displaystyle Z_{c}\left[\frac{C^{+} + C^{-}}{C^{+} - C^{-}}\right]$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">5</SPAN>)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img9.png"
+ ALT="$\displaystyle Z_{c}\left[\frac{Z_{L} \cos (kL) + j Z_{c} \sin(kL)}{jZ_{L} \sin(kL) + Z_{c} \cos(kL)}\right].$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">6</SPAN>)</TD></TR>
+</TABLE></DIV><FONT COLOR="#ff0000"></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>The input impedance of finite length bores can be estimated using the low-frequency approximation 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>Z</I><SUB><I>L</I></SUB> = 0</SPAN></FONT> for an open end and 
+<FONT COLOR="#ff0000"><!-- MATH
+ $Z_{L} = \infty$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.30ex; " SRC="img10.png"
+ ALT="\bgroup\color{red}$Z_{L} = \infty$\egroup"></SPAN></FONT> for a closed end.  In this case, Equation&nbsp;(<A HREF="#eq:chpt1:zin">6</A>) reduces to
+</FONT></FONT>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+Z_{in} = jZ_{c}\tan(kL)
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 2.31ex; vertical-align: -0.53ex; " SRC="img11.png"
+ ALT="$\displaystyle Z_{in} = jZ_{c}\tan(kL)
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">7</SPAN>)</SPAN>
+</DIV><FONT COLOR="#ff0000"><FONT COLOR="#000000">
+for the ideally open pipe and 
+</FONT></FONT>
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+Z_{in} = -jZ_{c}\cot(kL)
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 2.31ex; vertical-align: -0.53ex; " SRC="img12.png"
+ ALT="$\displaystyle Z_{in} = -jZ_{c}\cot(kL)
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">8</SPAN>)</SPAN>
+</DIV><FONT COLOR="#ff0000"><FONT COLOR="#000000">
+for the rigidly terminated pipe.
+</FONT></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+<LI>By equating an open pipe end at 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>x</I>=0</SPAN></FONT> with a value of 
+<FONT COLOR="#ff0000"><SPAN CLASS="MATH"><I>Z</I><SUB><I>in</I></SUB> = 0</SPAN></FONT> in the previous expressions, the resonance frequencies of the open-closed (o-c) pipe and the open-open (o-o) pipe are given for 
+<FONT COLOR="#ff0000"><!-- MATH
+ $n = 1, 2, \ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.03ex; vertical-align: -0.47ex; " SRC="img13.png"
+ ALT="\bgroup\color{red}$n = 1, 2, \ldots$\egroup"></SPAN></FONT> by
+</FONT></FONT>
+<BR>
+<DIV CLASS="displaymath"><A ID="eq:chpt1:oddw"></A><A ID="eq:chpt1:evenw"></A>
+<!-- MATH
+ \begin{eqnarray}
+f^{(\mbox{o-c})} &=& \frac{(2 n - 1) c}{4 L} \\
+f^{(\mbox{o-o})} &=& \frac{n c}{2 L},
+\end{eqnarray}
+ -->
+<TABLE CLASS="equation" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.73ex; vertical-align: -0.47ex; " SRC="img14.png"
+ ALT="$\displaystyle f^{(\mbox{o-c})}$"></TD>
+<TD ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 4.90ex; vertical-align: -1.55ex; " SRC="img15.png"
+ ALT="$\displaystyle \frac{(2 n - 1) c}{4 L}$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">9</SPAN>)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ STYLE="height: 2.73ex; vertical-align: -0.47ex; " SRC="img16.png"
+ ALT="$\displaystyle f^{(\mbox{o-o})}$"></TD>
+<TD ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ STYLE="height: 4.13ex; vertical-align: -1.55ex; " SRC="img17.png"
+ ALT="$\displaystyle \frac{n c}{2 L},$"></TD>
+<TD CLASS="eqno" WIDTH=10 ALIGN="RIGHT">
+(<SPAN CLASS="eqn-number">10</SPAN>)</TD></TR>
+</TABLE></DIV><FONT COLOR="#ff0000"><FONT COLOR="#000000">
+respectively.
+</FONT></FONT>
+<P>
+<FONT COLOR="#ff0000"><FONT COLOR="#000000">
+</LI>
+</FONT></FONT></UL>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A ID="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A ID="tex2html5"
+  HREF="node2.html">Cylindrical Sections</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A
+ HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node2.html">Cylindrical Sections</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="asa2021.html">Transfer Matrix Method Tutorial</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<table><tr><td><a href="http://www.mcgill.ca/">
+<img src="../images/mcgill.gif" width=150 border=0 alt="McGill"></a>
+<td>&copy;2021 McGill University. All Rights Reserved.<BR>Maintained by <a href="http://www.music.mcgill.ca/~gary/">Gary P. Scavone</a>.
+</table>
+
+
+</ADDRESS>
+</BODY>
+</HTML>

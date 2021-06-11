@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2021 (Released January 1, 2021) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Acoustic Losses</TITLE>
+<META NAME="description" CONTENT="Acoustic Losses">
+<META NAME="keywords" CONTENT="asa2021">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2021">
+
+<LINK REL="STYLESHEET" HREF="asa2021.css">
+
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation">
+<A
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="asa2021.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   <BR>
+<B> Next:</B> <A
+ HREF="node5.html">Load Impedance Approximations</A>
+<B>Up:</B> <A
+ HREF="asa2021.html">A Transfer Matrix Method Tutorial</A>
+<B> Previous:</B> <A
+ HREF="node3.html">Cascaded Cylindrical Sections</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00040000000000000000">
+Acoustic Losses</A>
+</H1>
+
+<UL>
+<LI>The previous analysis ignored losses.
+  <BR>
+<BR>  
+</LI>
+<LI>Losses in musical instrument air columns are primarily due to thermal conductivity and viscosity along the walls.
+  <BR>
+<BR>
+</LI>
+<LI>We can account for such losses by replacing the lossless wave number <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.68ex; vertical-align: -0.12ex; " SRC="img46.png"
+ ALT="$k$"></SPAN> in the previous expressions with a complex propagation constant <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.61ex; vertical-align: -0.02ex; " SRC="img47.png"
+ ALT="$\Gamma$"></SPAN> as:
+  
+<DIV CLASS="displaymath">
+
+<!-- MATH
+ \begin{equation}
+\mathbf{T}_{cyl} = \left[\begin{array}{cc}
+      \cosh(\Gamma L) & Z_{c}\sinh(\Gamma L) \\
+      Z_{c}^{-1}\sinh(\Gamma L) & \cosh(\Gamma L) \end{array}\right]
+\end{equation}
+ -->
+ &nbsp;  <IMG
+ STYLE="height: 5.60ex; vertical-align: -2.16ex; " SRC="img48.png"
+ ALT="$\displaystyle \mathbf{T}_{cyl} = \left[\begin{array}{cc}
+\cosh(\Gamma L) &amp; Z_{...
+...\Gamma L) \\
+Z_{c}^{-1}\sinh(\Gamma L) &amp; \cosh(\Gamma L) \end{array}\right]
+$"> <SPAN class="FLOATRIGHT">
+(<SPAN CLASS="eqn-number">13</SPAN>)</SPAN>
+</DIV>
+
+<P>
+</LI>
+<LI>For pipe radii in most musical instruments, a sufficiently accurate value of the propagation constant is <!-- MATH
+ $\Gamma  = j \omega/c + (1 + j)*\alpha$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.38ex; vertical-align: -0.60ex; " SRC="img49.png"
+ ALT="$\Gamma = j \omega/c + (1 + j)*\alpha$"></SPAN>, where <!-- MATH
+ $\alpha = (CST/r)\sqrt{k}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ STYLE="height: 2.73ex; vertical-align: -0.60ex; " SRC="img50.png"
+ ALT="$\alpha = (CST/r)\sqrt{k}$"></SPAN>, <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.12ex; vertical-align: -0.12ex; " SRC="img51.png"
+ ALT="$r$"></SPAN> is the pipe radius, and <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.75ex; vertical-align: -0.12ex; " SRC="img52.png"
+ ALT="$CST$"></SPAN> is a constant based on the Prandtl number, ratio of specific heats, dynamic viscosity and viscous length parameter (<A
+ HREF="node11.html#lefebvre:aaua2013">Lefebvre et&nbsp;al., 2013</A>).
+
+<P>
+
+<DIV class="CENTER"><A ID="555"></A>
+<TABLE>
+<CAPTION class="BOTTOM"><STRONG>Figure 5:</STRONG>
+Input impedance magnitude of 60 cm cylindrical segment, <SPAN CLASS="MATH"><IMG
+ STYLE="height: 1.96ex; vertical-align: -0.37ex; " SRC="img1.png"
+ ALT="$Z_L = 0$"></SPAN>, lossy vs. lossless (see <SPAN  CLASS="texttt">example3.m</SPAN> script).</CAPTION>
+<TR><TD><IMG
+ STYLE="height: 43.50ex; " SRC="img53.png"
+ ALT="\begin{figure}\begin{center}
+\epsfig{file = figures/Zin60cmZl0lossvslossless.eps,width=3in}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+</LI>
+</UL>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<table><tr><td><a href="https://acousticalsociety.org/asa-meetings/">
+<img src="ASA21Virtual.jpg" width=60 border=0 alt="ASA 2021"></a>
+<td>Presented at the 180th Meeting of the Acoustical Society of America, 8-10 June 2021 by <a href="http://www.music.mcgill.ca/~gary/">Gary P. Scavone</a>.</td>
+<td align=right><img src="mcgill.gif" width=150 border=0></td>
+<td align=right><img src="caml-gray.jpg" width=50 border=0></td>
+</table>
+
+
+</ADDRESS>
+</BODY>
+</HTML>
