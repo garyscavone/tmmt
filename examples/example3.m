@@ -25,7 +25,6 @@ k = omega / c;
 if ~lossy
   CST = 0;
 end
-alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get geometry data
 fingering = 0;
@@ -35,10 +34,10 @@ if isempty( boreData )
 end
 
 % Do TMM calculations and plot
-Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % losses
+Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % losses
 rzplot( f, Zin, 1, true, false, [], 'ro');
 
-Zin = tmm( boreData, holeData, rho, c, k, zeros(size(alpha)), endType ); % lossless
+Zin = tmm( boreData, holeData, rho, c, k, 0, endType ); % lossless
 rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
 title('Input Impedance of 60 cm pipe (Z_L = 0)')
 legend('Lossy', 'Lossless');

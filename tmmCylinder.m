@@ -1,15 +1,16 @@
-function [A, B, C, D] = tmmCylinder( k, L, r, Zc, alpha )
+function [A, B, C, D] = tmmCylinder( k, L, r, Zc, cst )
 % TMMCYLINDER:  Compute the transfer-matrix coefficients for a cylindrical section.
 %
-% [A B C D Z0] = TMMCYLINDER(K, L, R, ZC, ALPHA) returns the coefficients of
-% the transfer matrix describing a 1D cylindrical waveguide section. K is a
+% [A B C D] = TMMCYLINDER(K, L, R, ZC, CST) returns the coefficients of the
+% transfer matrix describing a 1D cylindrical waveguide section. K is a 1D
 % vector of wave numbers (frequencies) at which the coefficients are
 % computed, L is the section length, R is the section radius, and ZC is the
-% characteristic impedance of the section. The optional parameter ALPHA is
-% used to apply thermo-viscous losses. The returned values are column
-% vectors with as many rows as elements in K.
+% real characteristic impedance of the section. The optional parameter CST,
+% which is a constant that depends on the properties of air, is used to
+% apply thermo-viscous losses. The returned values are vectors of the same
+% dimension as K.
 %
-% by Gary P. Scavone, McGill University, 2013-2020.
+% by Gary P. Scavone, McGill University, 2013-2021.
 
 if ~isvector(k)
   error( 'k should be a 1D vector.' );
@@ -17,11 +18,8 @@ end
 
 Gamma = 1j*k;
 if ( nargin == 5 )
-  if sum(size(k) ~= size(alpha))
-    error( 'k and alpha should be the same size.' );
-  end
-  % Recompute Gamma for given radius
-  Gamma = Gamma + (1+1j) .* alpha / r;
+  % Include losses
+  Gamma = Gamma + (1+1j) * cst .* sqrt(k) / r;
 end
 
 sinhL = sinh( L * Gamma );

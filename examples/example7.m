@@ -25,7 +25,6 @@ k = omega / c;
 if ~lossy
   CST = 0;
 end
-alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get geometry data
 fingering = 7;
@@ -35,10 +34,10 @@ if isempty( boreData )
 end
 
 % Do TMM calculations and plot
-Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % tmm
+Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % tmm
 rzplot( f, Zin, 1, true, false, [], 'r-');
 
-Zin = tmmi( boreData, holeData, rho, c, k, alpha, endType ); % tmmi
+Zin = tmmi( boreData, holeData, rho, c, k, CST, endType ); % tmmi
 rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
 title('Input Impedance for Keefe flute (all holes open)')
 legend('TMM (No Interactions)', 'TMMI (Interactions)');

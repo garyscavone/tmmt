@@ -25,7 +25,6 @@ k = omega / c;
 if ~lossy
   CST = 0;
 end
-alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get geometry data
 fingering = 0;
@@ -35,10 +34,10 @@ if isempty( boreData )
 end
 
 % Do TMM calculations and plot
-Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % unflanged
+Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % unflanged
 rzplot( f, Zin, 1, true, false, [], 'ro');
 
-Zin = tmm( boreData, holeData, rho, c, k, alpha, 3 ); % ideally open
+Zin = tmm( boreData, holeData, rho, c, k, CST, 3 ); % ideally open
 rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
 title('Input Impedance of 60 cm pipe (Z_L = 0 vs. unflanged)')
 legend('Unflanged', 'Ideally Open');

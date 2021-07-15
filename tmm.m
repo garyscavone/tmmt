@@ -1,14 +1,14 @@
-function Zin = tmm( boreData, holeData, rho, c, k, alpha, endType )
+function Zin = tmm( boreData, holeData, rho, c, k, cst, endType )
 % TMM: Compute the normalized input impedance of a system using the
 %      transfer matrix method.
 %
-% ZIN = TMM( BOREDATA, HOLEDATA, RHO, C, K, GAMMA, ALPHA, ENDTYPE ) returns
-% the input impedance of a system, normalized by the characteristic
-% impedance at the input, described by BOREDATA and HOLEDATA at frequencies
-% specified by the wavenumber K, given values of air mass density RHO,
-% speed of sound C, and loss factor ALPHA. The optional parameter ENDTYPE
-% specifies the bore end condition [0 = rigidly closed; 1 = unflanged open
-% (default); 2 = flanged open; 3 = ideally open (Zl = 0)].
+% ZIN = TMM( BOREDATA, HOLEDATA, RHO, C, K, CST, ENDTYPE ) returns the
+% input impedance of a system defined by BOREDATA and HOLEDATA, normalized
+% by the characteristic impedance at the input, at frequencies specified by
+% the wavenumber K, given values of air mass density RHO, speed of sound C,
+% and loss factor CST. The optional parameter ENDTYPE specifies the bore
+% end condition [0 = rigidly closed; 1 = unflanged open (default); 2 =
+% flanged open; 3 = ideally open (Zl = 0)].
 %
 % by Gary P. Scavone, McGill University, 2013-2021.
 
@@ -38,12 +38,10 @@ states = holeData(5,:);          % tonehole states
 [n, m] = size(holeData);
 padr = zeros(1, m);
 padt = zeros(1, m);
-padw = zeros(1, m);
-if ( n > 6 )
-  padr = holeData(7,:);          % tonehole pad radii
-  padt = holeData(8,:);          % tonehole pad heights
-  padw = holeData(9,:);          % tonehole wall thickness
-end
+holew = zeros(1, m);
+if n > 6, padr = holeData(7,:); end % tonehole pad radii
+if n > 7, padt = holeData(8,:); end % tonehole pad heights
+if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 
 % Compute characteristic impedances for each bore and tonehole radius
 Zc = rho * c ./ (pi * ra.^2);
@@ -65,21 +63,21 @@ nHole = sum(isHole);
 for n = length(L):-1:1
   if L(n) > eps
     if ( ra(n) == ra(n+1) )
-      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), alpha );
+      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), cst );
     else
-      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), alpha );
+      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), cst );
     end
     if Zl == 0
-      Zl = (A.*Zl + B) ./ (C.*Zl + D);
+      Zl = B ./ D;
     else
       Zl = (A + B./Zl) ./ (C + D./Zl);
     end
   end
   
   if isHole(n)
-    [A, B, C, D] = tonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
-      padr(nHole), padt(nHole), padw(nHole), states(nHole), Zch(nHole), ...
-      chimney(nHole), alpha );
+    [A, B, C, D] = tmmTonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
+      Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
+      padt(nHole), holew );
     nHole = nHole - 1;
     Zl = (A + B./Zl) ./ (C + D./Zl);
   end

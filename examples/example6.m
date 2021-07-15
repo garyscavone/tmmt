@@ -25,7 +25,6 @@ k = omega / c;
 if ~lossy
   CST = 0;
 end
-alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get  geometry data
 figure(1)
@@ -39,7 +38,7 @@ end
 % Do TMM calculations and plot
 figure(2)
 plotTypes = [1 12];
-Zin = tmm( boreData, holeData, rho, c, k, alpha, endType );
+Zin = tmm( boreData, holeData, rho, c, k, CST, endType );
 rzplot( f, Zin, plotTypes, true, false, [], 'b-', [], true); % with time-domain smoothing
 xlim([0 10]);
 subplot(numel(plotTypes), 1, 1)

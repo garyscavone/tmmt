@@ -25,7 +25,6 @@ k = omega / c;
 if ~lossy
   CST = 0;
 end
-alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get geometry data
 figure(1)
@@ -37,8 +36,8 @@ if isempty( boreData )
 end
 
 % Do TMM calculations
-ZinOpen = tmm( boreData, holeData, rho, c, k, alpha, endType ); % ideally open end
-ZinClosed = tmm( boreData, holeData, rho, c, k, alpha, 0 );     % ideally closed end
+ZinOpen = tmm( boreData, holeData, rho, c, k, CST, endType ); % ideally open end
+ZinClosed = tmm( boreData, holeData, rho, c, k, CST, 0 );     % ideally closed end
 
 % Plot result
 figure(2)

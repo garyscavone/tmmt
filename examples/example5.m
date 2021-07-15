@@ -25,7 +25,6 @@ k = omega / c;
 if ~lossy
   CST = 0;
 end
-alpha = sqrt(k) * CST;             % loss factor, not including radius
 
 % Get first geometry data
 fingering = 0;
@@ -35,13 +34,14 @@ if isempty( boreData )
 end
 
 % Do first TMM calculations and plot
+figure(1)
 plotTypes = [1 5];
-Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % cylinders
+Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % cylinders
 rzplot( f, Zin, plotTypes, true, true, [], 'r-');
 
 % Get second geometry data
 fingering = 0;
-figure(1)
+figure(2)
 drawBore 'sevenSegments';
 [boreData, holeData] = sevenSegments( fingering );
 if isempty( boreData )
@@ -49,8 +49,8 @@ if isempty( boreData )
 end
 
 % Do second TMM calculations and plot
-figure(2)
-Zin = tmm( boreData, holeData, rho, c, k, alpha, endType ); % cones & cylinders
+figure(1)
+Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % cones & cylinders
 rzplot( f, Zin, plotTypes, true, false, [], 'b-'); % plot with initial hold on
 legend('Cylinders only', 'Cylinders / Cones');
 subplot(numel(plotTypes), 1, 1)
