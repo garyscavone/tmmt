@@ -18,7 +18,7 @@ function Zin = tmmi( boreData, holeData, rho, c, k, cst, endType )
 %      Interactions in Woodwind Instruments." Acta Acustica united with
 %      Acustica, vol. 99, pp. 975-985.
 %
-% 2. Kergomard, J. (1989), "Tone hold external interactions in woodwind
+% 2. Kergomard, J. (1989), "Tone hole external interactions in woodwind
 %      musical instruments." Proceedings of the 1989 Congress on Acoustics,
 %      Belgrade.
 
