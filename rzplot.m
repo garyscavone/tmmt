@@ -1,10 +1,10 @@
-function rzplot( f, Zin, plotTypes, doGrid, doHold, xlimits, pcolor, c, doSmooth )
+function rzplot( f, Zin, plotTypes, doGrid, doHold, xlimits, pcolor, doSmooth )
 % RZPLOT: Plot impedance and reflectance (and time-domain correlates).
 %
 % RZPLOT( f, Zin, plotTypes, doGrid, doHold, xlimit, pcolor, c, doSmooth ) where:
 %   - f: 1D vector of frequencies;
 %   - Zin: 1D vector of impedance data;
-%   - plotTypes: 1 or more values of the following plot types:
+%   - plotTypes: 1 or more values (in vector) of the following plot types:
 %     - 1:  Impedance Magnitude in dB
 %     - 2:  Impedance Magnitude (logarithmic y-scale)
 %     - 3:  Impedance Phase
@@ -14,14 +14,12 @@ function rzplot( f, Zin, plotTypes, doGrid, doHold, xlimits, pcolor, c, doSmooth
 %     - 7:  Reflectance Phase
 %     - 8:  Reflectance Real Part
 %     - 9:  Reflectance Imaginary Part
-%     - 10: Reflectance Equivalent Length
-%     - 11: Impulse Response
-%     - 12: Reflection Function
+%     - 10: Impulse Response
+%     - 11: Reflection Function
 %   - doGrid: optional boolian flag to turn on the grid;
 %   - doHold: optional boolian flag to specify "hold on" before plotting;
 %   - xlimits: optional x-axis plot limits;
 %   - pcolor: optional color for plot data;
-%   - c: optional speed of sound value needed for equivalent length plot;
 %   - doSmooth: optional boolian flag to specify smoothing of time data.
 %
 % by Gary P. Scavone, McGill University, 2013-2021.
@@ -34,7 +32,7 @@ if ~isvector( Zin )
   error( 'Zin and f must be a 1D vectors.' );
 end
 
-if ( sum(plotTypes > 4) )
+if ( sum(plotTypes > 5) )
   R = (Zin - 1) ./ (Zin + 1);
 end
 
@@ -87,35 +85,27 @@ for n = 1:nPlots
   elseif plotTypes(n) == 9
     p = plot( f, imag(R), pcolor );
     ylabel('Imag(Reflectance)')
-  elseif plotTypes(n) == 10
-    if ~exist( 'c', 'var' )
-      c = 340;
-    end
-    el = (pi - unwrap(angle(R)) + 1j*log(abs(R))) ./ (4*pi*f/c);
-    p = plot( f, 1000*(real(el)), pcolor );
-    ylim([150 200])
-    ylabel('Equivalent Length (mm)')
   end
-  if ( plotTypes(n) < 11 )
+  if ( plotTypes(n) < 10 )
     hx = xlabel('Frequency (Hz)');
   else
-    if plotTypes(n) == 11
+    if plotTypes(n) == 10
       H = transpose(Zin);
-      H(1) = 0;           % impedance at f=0 should be zero (roughly)
       ytext = 'Impulse Response';
-    elseif plotTypes(n) == 12
+    elseif plotTypes(n) == 11
       H = transpose(R);
-      H(1) = 1;           % reflectance at f=0 should be one (roughly)
       ytext = 'Reflection Function';
     end
-    H(end) = real(H(end));
-    if isrow( H )
-      H = [ H, conj( flip( H(2:end-1) ) ) ];  % make conjugate symmetric
-    else
-      H = [ H; conj( flip( H(2:end-1) ) ) ];  % make conjugate symmetric
+    H(1) = real(H(1));
+    if ~isrow( H ), H = H.'; end
+    if rem(length(H), 2) % odd length
+      H(end) = real(H(end));
+      H = [ H, conj( flip( H(2:end-1) ) ) ]; % make conjugate symmetric
+    else % even length
+      H = [ H, conj( flip( H(2:end) ) ) ];   % make conjugate symmetric
     end
-    h = real( ifft( H ) );
-    t = (0:length(h)-1) * 500 / max(f);      % time in milliseconds %
+    h = ifft( H );
+    t = (0:length(h)-1) * 500 / max(f);      % time in milliseconds
     if doSmooth
       h = filtfilt([0.5 0.5], 1, h);
     end

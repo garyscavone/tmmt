@@ -37,9 +37,9 @@ end
 
 % Do TMM calculations and plot
 figure(2)
-plotTypes = [1 12];
+plotTypes = [1 11];
 Zin = tmm( boreData, holeData, rho, c, k, CST, endType );
-rzplot( f, Zin, plotTypes, true, false, [], 'b-', [], true); % with time-domain smoothing
+rzplot( f, Zin, plotTypes, true, false, [], 'b-', true); % with time-domain smoothing
 xlim([0 10]);
 subplot(numel(plotTypes), 1, 1)
 title('Input Impedance (top) and reflection function (bottom) for Keefe flute.')
