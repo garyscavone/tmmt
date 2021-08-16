@@ -13,7 +13,7 @@ fmax = 6000;          % maximum evaluation frequency (Hz)
 N = fmax;             % number of frequencies for evaluation (even)
 finc = fmax / (N-1);
 f = eps:finc:fmax;
-omega = 2*pi*f.';
+omega = 2*pi*f;
 
 % Include path to needed scripts
 addpath( '../', '../geometries/' );
@@ -35,7 +35,7 @@ end
 
 % Do first TMM calculations and plot
 figure(1)
-plotTypes = [1 5];
+plotTypes = [1 6];
 Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % cylinders
 rzplot( f, Zin, plotTypes, true, true, [], 'r-');
 

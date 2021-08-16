@@ -13,7 +13,7 @@ fmax = 6000;          % maximum evaluation frequency (Hz)
 N = fmax;             % number of frequencies for evaluation (even)
 finc = fmax / (N-1);
 f = eps:finc:fmax;
-omega = 2*pi*f.';
+omega = 2*pi*f;
 
 % Include path to needed scripts
 addpath( '../', '../geometries/' );

@@ -1,24 +1,34 @@
-function Zin = tmmi( boreData, holeData, rho, c, k, alpha, endType, doInt )
+function Zin = tmmi( boreData, holeData, rho, c, k, cst, endType )
 % TMMI: Compute the normalized input impedance of a system using the
 %       transfer matrix method with external tonehole interactions.
 %
-% ZIN = TMMI( BOREDATA, HOLEDATA, RHO, C, K, GAMMA, ALPHA, ISCLOSED )
-% returns the input impedance of a system, normalized by the characteristic
-% impedance at the input, described by BOREDATA and HOLEDATA at frequencies
-% specified by the wavenumber K, given values of air mass density RHO,
-% speed of sound C, and loss factor ALPHA. The optional parameter ENDTYPE
-% specifies whether the bore end condition [0 = rigidly closed;
-% 1 = unflanged open (default); 2 = flanged open; 3 = ideally open (Zl = 0)].
+% ZIN = TMMI( BOREDATA, HOLEDATA, RHO, C, K, CST, ENDTYPE ) returns the
+% input impedance of a system defined by BOREDATA and HOLEDATA, normalized
+% by the characteristic impedance at the input, at frequencies specified by
+% the wavenumber K, given values of air mass density RHO, speed of sound C,
+% and loss factor CST. The optional parameter ENDTYPE specifies the bore
+% end condition [0 = rigidly closed; 1 = unflanged open (default); 2 =
+% flanged open; 3 = ideally open (Zl = 0)].
 %
 % by Gary P. Scavone, McGill University, 2013-2021.
+%
+% References:
+%
+% 1. Lefebvre, A., Scavone, G. and Kergomard, J. (2013), "External Tonehole
+%      Interactions in Woodwind Instruments." Acta Acustica united with
+%      Acustica, vol. 99, pp. 975-985.
+%
+% 2. Kergomard, J. (1989), "Tone hold external interactions in woodwind
+%      musical instruments." Proceedings of the 1989 Congress on Acoustics,
+%      Belgrade.
 
 if ( nargin < 7 )
   endType = 1;
 end
 
-if nargin < 8
-  doInt = true;
-end
+% Calculate and use mutual radiation impedances. If this is off, the
+% calculations should be equivalent to the TMM.
+doInteractions = true;
   
 % Bore dimensions
 idx = find(diff(boreData(1,:)) == 0);
@@ -41,11 +51,11 @@ states = holeData(5,:);          % tonehole states
 [n, m] = size(holeData);
 padr = zeros(1, m);
 padt = zeros(1, m);
-padw = zeros(1, m);
+holew = zeros(1, m);
 if ( n > 6 )
   padr = holeData(7,:);          % tonehole pad radii
   padt = holeData(8,:);          % tonehole pad heights
-  padw = holeData(9,:);          % tonehole wall thickness
+  holew = holeData(9,:);          % tonehole wall thickness
 end
 
 nOth = sum( states );   % number of open toneholes
@@ -58,7 +68,7 @@ end
 
 if nOpen < 2
   % Do TTM
-  Zin = tmm( boreData, holeData, rho, c, k, alpha, endOpen );
+  Zin = tmm( boreData, holeData, rho, c, k, cst, endOpen );
   return
 end
 
@@ -82,21 +92,21 @@ Y = zeros( nOpen, nOpen, length(k) );
 for n = 1:nOth
 
   nHole = oidx(n);
-  [~, B, C, ~] = tonehole( k, rb(nHole)/ras(nHole), rb(nHole), t(nHole), ...
-    padr(nHole), padt(nHole), padw(nHole), states(nHole), Zch(nHole), ...
-    chimney(nHole), alpha, 'KeefeMatrix' );
+  [~, B, C, ~] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), t(nHole), ...
+    Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
+    padt(nHole), holew(nHole) );
       
   % Diagonals of (Z+B) matrix are open hole shunt impedances.
   ZB(n, n, :) = 1 ./ C;
   
   % Compute other Z terms (mutual radiation impedances)
-  if doInt
-  for m = 1:nOth
-    if m == n, continue; end
-    dnm = abs( ds(n) - ds(m) );
-    %ZB(n, m, :) = 1j*rho*c*k.*exp(-1j*k*dnm)/(4*pi*dnm);
-    ZB(n, m, :) = 1j*rho*c*k.*exp(-1j*k*dnm)/(2*pi*dnm); % extra factor of 2
-  end
+  if doInteractions
+    for m = 1:nOth
+      if m == n, continue; end
+      dnm = abs( ds(n) - ds(m) );
+      %ZB(n, m, :) = 1j*rho*c*k.*exp(-1j*k*dnm)/(4*pi*dnm);
+      ZB(n, m, :) = 1j*rho*c*k.*exp(-1j*k*dnm)/(2*pi*dnm); % extra factor of 2
+    end
   end
     
   % Compute Y elements: Start with 1/2 of series length correction for
@@ -107,9 +117,9 @@ for n = 1:nOth
   for m = xidx(n):xidx(n+1)-1
     if isHole(m)
       if states(nHole) == 0 % closed
-        [A, B, C, D] = tonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
-          t(nHole), padr(nHole), padt(nHole), padw(nHole), ...
-          states(nHole), Zch(nHole), chimney(nHole), alpha );
+        [A, B, C, D] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
+          t(nHole), Zch(nHole), states(nHole), cst, '', chimney(nHole), ...
+          padr(nHole), padt(nHole), holew(nHole) );
         MAT = MA.*A + MB.*C;
         MBT = MA.*B + MB.*D;
         MCT = MC.*A + MD.*C;
@@ -122,9 +132,9 @@ for n = 1:nOth
     % Cascade cylindrical or conical sections
     if L(m) < eps, continue; end % skip if at a diameter discontinuity
     if ra(m) == ra(m+1)
-      [A, B, C, D] = tmmCylinder( k, L(m), ra(m), Zc(m), alpha );
+      [A, B, C, D] = tmmCylinder( k, L(m), ra(m), Zc(m), cst );
     else
-      [A, B, C, D] = tmmCone( k, L(m), ra(m), ra(m+1), Zc(m), alpha );
+      [A, B, C, D] = tmmCone( k, L(m), ra(m), ra(m+1), Zc(m), cst );
     end
     MAT = MA.*A + MB.*C;
     MBT = MA.*B + MB.*D;
@@ -137,9 +147,9 @@ for n = 1:nOth
   % (if not the end hole).
   if n < nOth
     nHole = oidx(n+1);
-    [A, B, ~, D,] = tonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
-      t(nHole), padr(nHole), padt(nHole), padw(nHole), ...
-      states(nHole), Zch(nHole), chimney(nHole), alpha, 'KeefeMatrix' );
+    [A, B, ~, D,] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
+      t(nHole), Zch(nHole), states(nHole), cst, '', chimney(nHole), ...
+      padr(nHole), padt(nHole), holew(nHole) );
     B = B/2; C = 0;
     MAT = MA.*A + MB.*C;
     MBT = MA.*B + MB.*D;
@@ -171,7 +181,7 @@ if endType
     case 3
       ZB(nOpen,nOpen,:) = zeros(size(k));
   end
-  if doInt
+  if doInteractions
     for m = 1:nOth
       dnm = abs( x(end) - ds(m) );
       ZB(nOpen, m, :) = 1j*rho*c*k.*exp(-1j*k*dnm)/(4*pi*dnm);
@@ -195,16 +205,16 @@ for n = 1:length(k)
 end
   
 % Compute "load" impedance of section rightward from first open hole
-%Zl = (P(1, :) ./ U(1, :)).';
-Zl = P(1, :).';  % since Us(1) = 1
+%Zl = (P(1, :) ./ U(1, :));
+Zl = P(1, :);  % since Us(1) = 1
 
 % If there is at least one open tonehole, account for 1/2 of its series
 % impedance on the upstream side.
 if ~isempty( oidx )
   nHole = oidx(1);
-  [~, B, ~, D,] = tonehole( k, rb(nHole)/ras(nHole), rb(nHole), t(nHole), ...
-    padr(nHole), padt(nHole), padw(nHole), states(nHole), Zch(nHole), ...
-    chimney(nHole), alpha, 'KeefeMatrix' );
+  [~, B, ~, D,] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), t(nHole), ...
+    Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
+    padt(nHole), holew(nHole) );
   Zl = (Zl + B) ./ D;
   nHole = nHole - 1; % decrement hole counter
 else % no open holes
@@ -216,16 +226,17 @@ end
 for n = xidx(1)-1:-1:1
   if L(n) > eps
     if ( ra(n) == ra(n+1) )
-      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), alpha );
+      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), cst );
     else
-      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), alpha );
+      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), cst );
     end
     Zl = (A.*Zl + B) ./ (C.*Zl + D);
   end
   
   if isHole(n)
-    [A, B, C, D] = tonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
-      padr(nHole), padt(nHole), padw(nHole), states(nHole), Zch(nHole), alpha );
+    [A, B, C, D] = tmmTonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
+      Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
+      padt(nHole), holew(nHole) );
     nHole = nHole - 1;
     Zl = (A.*Zl + B) ./ (C.*Zl + D);
   end

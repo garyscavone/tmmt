@@ -77,7 +77,7 @@ for n = length(L):-1:1
   if isHole(n)
     [A, B, C, D] = tmmTonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
       Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
-      padt(nHole), holew );
+      padt(nHole), holew(nHole) );
     nHole = nHole - 1;
     Zl = (A + B./Zl) ./ (C + D./Zl);
   end
