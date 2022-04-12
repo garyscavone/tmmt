@@ -68,7 +68,7 @@ end
 
 if nOpen < 2
   % Do TTM
-  Zin = tmm( boreData, holeData, rho, c, k, cst, endOpen );
+  Zin = tmm( boreData, holeData, rho, c, k, cst, endType );
   return
 end
 
