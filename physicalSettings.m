@@ -20,9 +20,9 @@ function [c, rho, CST] = physicalSettings( T )
 % by Gary P. Scavone, McGill University, 2013-2021.
 
 deltaT = T - 26.85;
-c = 347.23*(1+0.00166*deltaT);        % speed of sound in air (m/s)
-rho = 1.1769*(1-0.00335*deltaT);      % density of air (kg/m^3)
-mu = 1.846*10^(-5)*(1+0.0025*deltaT); % shear viscosity coefficient (kg/m s)
-gamma = 1.4017*(1-0.00002*deltaT);    % ratio of specific heats
-Pr = 0.71;                            % Prandtl number
-CST = sqrt(mu/(rho*c)/2)*(1+((gamma-1)/sqrt(Pr))); % loss constant (see Ref. 2)
+c = 347.23 * ( 1 + 0.00166 * deltaT );        % speed of sound in air (m/s)
+rho = 1.1769 * ( 1 - 0.00335 * deltaT );      % density of air (kg/m^3)
+mu = 1.846*10^(-5) * ( 1 + 0.0025 * deltaT ); % shear viscosity coefficient (kg/m s)
+gamma = 1.4017 * ( 1 - 0.00002 * deltaT );    % ratio of specific heats
+sqrtPr = 0.8410 * ( 1 - 0.00002 * deltaT );   % Prandtl number (around 0.71)
+CST = sqrt(mu/(rho*c)/2)*(1+((gamma-1)/sqrtPr)); % loss constant (see Ref. 2)

@@ -147,10 +147,10 @@ for n = 1:nOth
   % (if not the end hole).
   if n < nOth
     nHole = oidx(n+1);
-    [A, B, ~, D,] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
+    [~, B, ~, ~] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
       t(nHole), Zch(nHole), states(nHole), cst, '', chimney(nHole), ...
       padr(nHole), padt(nHole), holew(nHole) );
-    B = B/2; C = 0;
+    B = B/2; C = 0; A = 1; D = 1;
     MAT = MA.*A + MB.*C;
     MBT = MA.*B + MB.*D;
     MCT = MC.*A + MD.*C;
