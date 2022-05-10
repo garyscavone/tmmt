@@ -1,18 +1,31 @@
-function Zin = tmm( boreData, holeData, rho, c, k, cst, endType )
+function Zin = tmm( boreData, holeData, f, T, lossy, endType )
 % TMM: Compute the normalized input impedance of a system using the
 %      transfer matrix method.
 %
-% ZIN = TMM( BOREDATA, HOLEDATA, RHO, C, K, CST, ENDTYPE ) returns the
-% input impedance of a system defined by BOREDATA and HOLEDATA, normalized
-% by the characteristic impedance at the input, at frequencies specified by
-% the wavenumber K, given values of air mass density RHO, speed of sound C,
-% and loss factor CST. The optional parameter ENDTYPE specifies the bore
-% end condition [0 = rigidly closed; 1 = unflanged open (default); 2 =
-% flanged open; 3 = ideally open (Zl = 0)].
+% ZIN = TMM( BOREDATA, HOLEDATA, F, T, LOSSY, ENDTYPE ) returns the input
+% impedance of a system defined by BOREDATA and HOLEDATA, normalized by the
+% characteristic impedance at the input, at frequencies specified in the 1D
+% vector F, given an optional air temperature T in degrees Celsius (default
+% = 20 C). If the optional parameter LOSSY = false, losses will be ignored
+% (default = true). The optional parameter ENDTYPE specifies the bore end
+% condition [0 = rigidly closed; 1 = unflanged open (default); 2 = flanged
+% open; 3 = ideally open (Zl = 0)].
 %
-% by Gary P. Scavone, McGill University, 2013-2021.
+% by Gary P. Scavone, McGill University, 2013-2022.
 
-if nargin < 7
+if nargin < 3 || nargin > 6
+  error( 'Invalid number of arguments.');
+end
+if ~isvector(f)
+  error( 'f should be a 1D vector of frequencies in Hertz.' );
+end
+if ~exist( 'T', 'var')
+  T = 20;
+end
+if ~exist( 'lossy', 'var')
+  lossy = true;
+end
+if ~exist( 'endType', 'var')
   endType = 1;
 end
 
@@ -43,6 +56,14 @@ if n > 6, padr = holeData(7,:); end % tonehole pad radii
 if n > 7, padt = holeData(8,:); end % tonehole pad heights
 if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 
+% Get physical variables and attenuation values
+[c, rho, wallcst, alphacm] = physicalSettings( T, f );
+if ~lossy
+  wallcst = 0;
+  alphacm = alphacm * 0;
+end
+k = 2 * pi * f / c;
+
 % Compute characteristic impedances for each bore and tonehole radius
 Zc = rho * c ./ (pi * ra.^2);
 Zch = rho * c ./ (pi * rb.^2);
@@ -63,9 +84,9 @@ nHole = sum(isHole);
 for n = length(L):-1:1
   if L(n) > eps
     if ( ra(n) == ra(n+1) )
-      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), cst );
+      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), wallcst, alphacm );
     else
-      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), cst );
+      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), wallcst, alphacm );
     end
     if Zl == 0
       Zl = B ./ D;
@@ -76,7 +97,7 @@ for n = length(L):-1:1
   
   if isHole(n)
     [A, B, C, D] = tmmTonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
-      Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
+      Zch(nHole), states(nHole), wallcst, alphacm, '', chimney(nHole), padr(nHole), ...
       padt(nHole), holew(nHole) );
     nHole = nHole - 1;
     Zl = (A + B./Zl) ./ (C + D./Zl);

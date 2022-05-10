@@ -2,7 +2,7 @@
 % reflectance of a air column structure (as defined in a separate geometry
 % file) using the TMM approach.
 %
-% by Gary P. Scavone, McGill University, 2021.
+% by Gary P. Scavone, McGill University, 2021-2022.
 
 clear; clf;
 lossy = false; % turn on/off losses
@@ -13,18 +13,10 @@ fmax = 6000;          % maximum evaluation frequency (Hz)
 N = fmax;             % number of frequencies for evaluation (even)
 finc = fmax / (N-1);
 f = eps:finc:fmax;
-omega = 2*pi*f;
+T = 20;   % temperature (C)
 
 % Include path to needed scripts
 addpath( '../', '../geometries/' );
-
-% Physical constants
-T = 20;   % temperature (C)
-[c, rho, CST] = physicalSettings( T );
-k = omega / c;
-if ~lossy
-  CST = 0;
-end
 
 % Get geometry data
 figure(1)
@@ -36,7 +28,7 @@ if isempty( boreData )
 end
 
 % Do TMM calculations
-Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % ideally open end
+Zin = tmm( boreData, holeData, f, T, lossy, endType ); % ideally open end
 
 % Plot result using rzplot script
 figure(2)

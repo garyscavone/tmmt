@@ -2,7 +2,7 @@
 % reflectance of a air column structure (as defined in a separate geometry
 % file) using the TMM approach.
 %
-% by Gary P. Scavone, McGill University, 2021.
+% by Gary P. Scavone, McGill University, 2021-2022.
 
 clear; clf;
 lossy = true; % turn on/off losses
@@ -13,18 +13,10 @@ fmax = 6000;          % maximum evaluation frequency (Hz)
 N = fmax;             % number of frequencies for evaluation (even)
 finc = fmax / (N-1);
 f = eps:finc:fmax;
-omega = 2*pi*f;
+T = 20;   % temperature (C)
 
 % Include path to needed scripts
 addpath( '../', '../geometries/' );
-
-% Physical constants
-T = 20;   % temperature (C)
-[c, rho, CST] = physicalSettings( T );
-k = omega / c;
-if ~lossy
-  CST = 0;
-end
 
 % Get geometry data
 fingering = 0;
@@ -34,10 +26,10 @@ if isempty( boreData )
 end
 
 % Do TMM calculations and plot
-Zin = tmm( boreData, holeData, rho, c, k, CST, endType ); % unflanged
+Zin = tmm( boreData, holeData, f, T, lossy, endType ); % unflanged
 rzplot( f, Zin, 1, true, false, [], 'ro');
 
-Zin = tmm( boreData, holeData, rho, c, k, CST, 3 ); % ideally open
+Zin = tmm( boreData, holeData, f, T, lossy, 3 ); % ideally open
 rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
 title('Input Impedance of 60 cm pipe (Z_L = 0 vs. unflanged)')
 legend('Unflanged', 'Ideally Open');

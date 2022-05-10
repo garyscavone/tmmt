@@ -1,23 +1,25 @@
-function [W, X, Y, Z] = tmmTonehole( k, delta, b, t, Zc, state, cst, type, chimney, rPad, hPad, w )
+function [W, X, Y, Z] = tmmTonehole( k, delta, b, t, Zc, state, cst, alphacm, type, chimney, rPad, hPad, w )
 % TONEHOLE:  Compute the transfer matrix coefficients for a tonehole.
 %
-% [W X Y Z] = TMMTONEHOLE(K, DELTA, B, T, ZC, STATE, CST, TYPE, CHIMNEY,
-% RPAD, HPAD) returns the coefficients of the transfer matrix describing a
-% tonehole section. K is a vector of wave numbers (frequencies) at which
-% the coefficients are computed, DELTA is the ratio of hole to air column
-% radii, B is the hole radius, T is the tonehole height, ZC is the
-% characteristic impedance of the hole, and STATE is 0 or 1 to indicate
-% whether the hole is closed or open, respectively. The remaining
-% parameters are optional: CST is a constant used to include thermo-viscous
-% losses, TYPE is either 'Keefe1990', 'Dalmont2002', or 'Lefebvre2012'
-% (default) to specify the model, CHIMNEY is the length the tonehole
-% extends out from the bore, RPAD is the radius of a hanging pad over the
-% hole (use 0 for no pad), HPAD is the distance of the pad from the hole
-% and W is the wall thickness of the tonehole (default values = 0 if not
-% otherwise specified). The returned values are vectors of the same
-% dimension as K.
+% [W X Y Z] = TMMTONEHOLE(K, DELTA, B, T, ZC, STATE, CST, ALPHACM, TYPE,
+% CHIMNEY, RPAD, HPAD) returns the coefficients of the transfer matrix
+% describing a tonehole section. K is a vector of wave numbers
+% (frequencies) at which the coefficients are computed, DELTA is the ratio
+% of hole to air column radii, B is the hole radius, T is the tonehole
+% height, ZC is the characteristic impedance of the hole, and STATE is 0 or
+% 1 to indicate whether the hole is closed or open, respectively. The
+% remaining parameters are optional: CST is a wall loss constant used to
+% include thermo-viscous losses (default = no losses), ALPHACM is a 1D
+% vector (the same size as K) of attenuation values corresponding to
+% molecular and classical losses in air (default = no losses), TYPE is
+% either 'Keefe1990', 'Dalmont2002', or 'Lefebvre2012' (default) to specify
+% the model, CHIMNEY is the length the tonehole extends out from the bore,
+% RPAD is the radius of a hanging pad over the hole (use 0 for no pad),
+% HPAD is the distance of the pad from the hole and W is the wall thickness
+% of the tonehole (default values = 0 if not otherwise specified). The
+% returned values are vectors of the same dimension as K.
 %
-% by Gary P. Scavone, McGill University, 2013-2021.
+% by Gary P. Scavone, McGill University, 2013-2022.
 % Based in part on functions from WIAT by Antoine Lefebvre.
 %
 % References:
@@ -58,6 +60,13 @@ end
 if nargin > 6
   % Include losses via loss parameter
   k = k + (1+1j) * cst .* sqrt(k) / b;
+end
+
+if nargin > 7
+  if size(k) ~= size(alphacm)
+    error( 'Incompatible sizes of k and alphacm vectors.' );
+  end
+  k = k + alphacm;
 end
 
 if nargin < 8 || isempty(type), type = 'Lefebvre2012'; end

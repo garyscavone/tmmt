@@ -1,16 +1,17 @@
-function Zin = tmmi( boreData, holeData, rho, c, k, cst, endType )
+function Zin = tmmi( boreData, holeData, f, T, lossy, endType )
 % TMMI: Compute the normalized input impedance of a system using the
 %       transfer matrix method with external tonehole interactions.
 %
-% ZIN = TMMI( BOREDATA, HOLEDATA, RHO, C, K, CST, ENDTYPE ) returns the
-% input impedance of a system defined by BOREDATA and HOLEDATA, normalized
-% by the characteristic impedance at the input, at frequencies specified by
-% the wavenumber K, given values of air mass density RHO, speed of sound C,
-% and loss factor CST. The optional parameter ENDTYPE specifies the bore
-% end condition [0 = rigidly closed; 1 = unflanged open (default); 2 =
-% flanged open; 3 = ideally open (Zl = 0)].
+% ZIN = TMMI( BOREDATA, HOLEDATA, F, T, LOSSY, ENDTYPE ) returns the input
+% impedance of a system defined by BOREDATA and HOLEDATA, normalized by the
+% characteristic impedance at the input, at frequencies specified in the 1D
+% vector F, given an optional air temperature T in degrees Celsius (default
+% = 20 C). If the optional parameter LOSSY = false, losses will be ignored
+% (default = true). The optional parameter ENDTYPE specifies the bore end
+% condition [0 = rigidly closed; 1 = unflanged open (default); 2 = flanged
+% open; 3 = ideally open (Zl = 0)].
 %
-% by Gary P. Scavone, McGill University, 2013-2021.
+% by Gary P. Scavone, McGill University, 2013-2022.
 %
 % References:
 %
@@ -22,7 +23,19 @@ function Zin = tmmi( boreData, holeData, rho, c, k, cst, endType )
 %      musical instruments." Proceedings of the 1989 Congress on Acoustics,
 %      Belgrade.
 
-if ( nargin < 7 )
+if nargin < 3 || nargin > 6
+  error( 'Invalid number of arguments.');
+end
+if ~isvector(f)
+  error( 'f should be a 1D vector of frequencies in Hertz.' );
+end
+if ~exist( 'T', 'var')
+  T = 20;
+end
+if ~exist( 'lossy', 'var')
+  lossy = true;
+end
+if ~exist( 'endType', 'var')
   endType = 1;
 end
 
@@ -55,7 +68,7 @@ holew = zeros(1, m);
 if ( n > 6 )
   padr = holeData(7,:);          % tonehole pad radii
   padt = holeData(8,:);          % tonehole pad heights
-  holew = holeData(9,:);          % tonehole wall thickness
+  holew = holeData(9,:);         % tonehole wall thickness
 end
 
 nOth = sum( states );   % number of open toneholes
@@ -66,11 +79,18 @@ if endType
   nOpen = nOth + 1;
 end
 
-if nOpen < 2
-  % Do TTM
-  Zin = tmm( boreData, holeData, rho, c, k, cst, endType );
+if nOpen < 2  % Do TMM
+  Zin = tmm( boreData, holeData, f, T, lossy, endType );
   return
 end
+
+% Get physical variables and attenuation values
+[c, rho, wallcst, alphacm] = physicalSettings( T, f );
+if ~lossy
+  wallcst = 0;
+  alphacm = alphacm * 0;
+end
+k = 2 * pi * f / c;
 
 % Compute characteristic impedances for each bore and tonehole radius
 Zc = rho * c ./ (pi * ra.^2);
@@ -93,8 +113,8 @@ for n = 1:nOth
 
   nHole = oidx(n);
   [~, B, C, ~] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), t(nHole), ...
-    Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
-    padt(nHole), holew(nHole) );
+    Zch(nHole), states(nHole), wallcst, alphacm, '', chimney(nHole), ...
+    padr(nHole), padt(nHole), holew(nHole) );
       
   % Diagonals of (Z+B) matrix are open hole shunt impedances.
   ZB(n, n, :) = 1 ./ C;
@@ -118,8 +138,8 @@ for n = 1:nOth
     if isHole(m)
       if states(nHole) == 0 % closed
         [A, B, C, D] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
-          t(nHole), Zch(nHole), states(nHole), cst, '', chimney(nHole), ...
-          padr(nHole), padt(nHole), holew(nHole) );
+          t(nHole), Zch(nHole), states(nHole), wallcst, alphacm, '', ...
+          chimney(nHole), padr(nHole), padt(nHole), holew(nHole) );
         MAT = MA.*A + MB.*C;
         MBT = MA.*B + MB.*D;
         MCT = MC.*A + MD.*C;
@@ -132,9 +152,9 @@ for n = 1:nOth
     % Cascade cylindrical or conical sections
     if L(m) < eps, continue; end % skip if at a diameter discontinuity
     if ra(m) == ra(m+1)
-      [A, B, C, D] = tmmCylinder( k, L(m), ra(m), Zc(m), cst );
+      [A, B, C, D] = tmmCylinder( k, L(m), ra(m), Zc(m), wallcst, alphacm );
     else
-      [A, B, C, D] = tmmCone( k, L(m), ra(m), ra(m+1), Zc(m), cst );
+      [A, B, C, D] = tmmCone( k, L(m), ra(m), ra(m+1), Zc(m), wallcst, alphacm );
     end
     MAT = MA.*A + MB.*C;
     MBT = MA.*B + MB.*D;
@@ -148,8 +168,8 @@ for n = 1:nOth
   if n < nOth
     nHole = oidx(n+1);
     [~, B, ~, ~] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
-      t(nHole), Zch(nHole), states(nHole), cst, '', chimney(nHole), ...
-      padr(nHole), padt(nHole), holew(nHole) );
+      t(nHole), Zch(nHole), states(nHole), wallcst, alphacm, '', ...
+      chimney(nHole), padr(nHole), padt(nHole), holew(nHole) );
     B = B/2; C = 0; A = 1; D = 1;
     MAT = MA.*A + MB.*C;
     MBT = MA.*B + MB.*D;
@@ -212,9 +232,9 @@ Zl = P(1, :);  % since Us(1) = 1
 % impedance on the upstream side.
 if ~isempty( oidx )
   nHole = oidx(1);
-  [~, B, ~, D,] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), t(nHole), ...
-    Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
-    padt(nHole), holew(nHole) );
+  [~, B, ~, D,] = tmmTonehole( k, rb(nHole)/ras(nHole), rb(nHole), ...
+    t(nHole), Zch(nHole), states(nHole), wallcst, alphacm, '', ...
+    chimney(nHole), padr(nHole), padt(nHole), holew(nHole) );
   Zl = (Zl + B) ./ D;
   nHole = nHole - 1; % decrement hole counter
 else % no open holes
@@ -226,17 +246,17 @@ end
 for n = xidx(1)-1:-1:1
   if L(n) > eps
     if ( ra(n) == ra(n+1) )
-      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), cst );
+      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), wallcst, alphacm );
     else
-      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), cst );
+      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), wallcst, alphacm );
     end
     Zl = (A.*Zl + B) ./ (C.*Zl + D);
   end
   
   if isHole(n)
     [A, B, C, D] = tmmTonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
-      Zch(nHole), states(nHole), cst, '', chimney(nHole), padr(nHole), ...
-      padt(nHole), holew(nHole) );
+      Zch(nHole), states(nHole), wallcst, alphacm, '', chimney(nHole), ...
+      padr(nHole), padt(nHole), holew(nHole) );
     nHole = nHole - 1;
     Zl = (A.*Zl + B) ./ (C.*Zl + D);
   end
