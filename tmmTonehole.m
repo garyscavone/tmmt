@@ -59,7 +59,7 @@ end
 
 if nargin > 6
   % Include losses via loss parameter
-  k = k + (1+1j) * cst .* sqrt(k) / b;
+  k = k - (1+1j) * cst .* sqrt(k) / b;
 end
 
 if nargin > 7
