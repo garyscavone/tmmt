@@ -4,7 +4,7 @@
 %
 % by Gary P. Scavone, McGill University, 2021-2022.
 
-clear; clf;
+%clear; clf;
 lossy = true; % turn on/off losses
 endType = 1;   % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
 

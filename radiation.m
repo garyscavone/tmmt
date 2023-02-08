@@ -1,11 +1,14 @@
-function Zr = radiation( k, a, type )
-% ZR = RADIATION( K, A, TYPE ) computes the radiation impedance (normalized
-%      by Zc) for the given values of k = omega / c and a = output radius
-%      in meters. TYPE is an optional parameter specifying a particular
-%      condition or formula. The default is 'UnflangedDalmont,' which is an
-%      approximation provided in [1].
+function [Zr, R] = radiation( k, a, type )
+% [ZR, R] = RADIATION( K, A, TYPE ) computes the radiation impedance ZR
+%      (normalized by Zc) and reflectance R for the given values of k =
+%      omega / c and a = output radius in meters. TYPE is an optional
+%      parameter specifying a particular condition or formula. The default
+%      ('dalmont') is an unflanged approximation provided in [1]. Other
+%      options include the unflanged ('unflanged') solution by Levine &
+%      Schwinger (1948), an unflanged approximation by Causse ('causse')
+%      and the flanged ('flanged') solution of Norris and Sheng (1989).
 %
-% by Gary P. Scavone, McGill University, 2013-2021.
+% by Gary P. Scavone, McGill University, 2013-2022.
 % Based in part on functions from WIAT by Antoine Lefebvre.
 %
 % References:
@@ -35,7 +38,7 @@ function Zr = radiation( k, a, type )
 %     Zr = 0.25*ka^2 + 0.61j*ka
 
 if ( nargin < 3 )
-  type = 'UnflangedDalmont';
+  type = 'dalmont';
 end
 
 ka = k*a;
@@ -76,7 +79,7 @@ if strcmp( type, 'unflanged' )
   R = -r.*exp(-2*1i*ka.*loa);
   Zr = (1 + R) ./ (1 - R);
 
-elseif strcmp( type, 'UnflangedDalmont' )
+elseif strcmp( type, 'dalmont' )
   
   % Unflanged pipe radiation impedance approximation (ka < 1.5) from
   % reference [1].
@@ -85,14 +88,14 @@ elseif strcmp( type, 'UnflangedDalmont' )
   R = -abs(R0).*exp(-2*1i*ka.*delta);
   Zr = (1 + R) ./ (1 - R);
 
-elseif strcmp( type, 'UnflangedCausse' )
+elseif strcmp( type, 'causse' )
   
   % Unflanged pipe radiation impedance approximation (ka < 1.5) from
   % reference [2], formula taken from reference [1].
   Zr = 1j*0.6113*ka - 1j*ka.^3 .* (0.036-0.034*log(ka) + 0.0187*ka2) + ...
     0.25*ka2 + ka.^4.*(0.0127+0.082*log(ka) - 0.023*ka2);
   
-elseif strcmp( type, 'FlangedNorris' )
+elseif strcmp( type, 'flanged' )
 
   % Infinite flange fit formula by Norris and Sheng for ka < 3.5, taken
   % from reference [1].

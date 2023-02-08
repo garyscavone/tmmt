@@ -71,9 +71,9 @@ Zch = rho * c ./ (pi * rb.^2);
 % Work our way back from the load impedance at the end.
 switch endType
   case 1
-    Zl = Zc(end)*radiation( k, ra(end), 'UnflangedDalmont' ); % L&S unflanged approximation
+    Zl = Zc(end)*radiation( k, ra(end), 'dalmont' ); % L&S unflanged approximation
   case 2
-    Zl = Zc(end)*radiation( k, ra(end), 'FlangedNorris' ); % load impedance at end
+    Zl = Zc(end)*radiation( k, ra(end), 'flanged' ); % load impedance at end
   case 3
     Zl = 0;
   otherwise

@@ -1,5 +1,5 @@
 function [W, X, Y, Z] = tmmTonehole( k, delta, b, t, Zc, state, cst, alphacm, type, chimney, rPad, hPad, w )
-% TONEHOLE:  Compute the transfer matrix coefficients for a tonehole.
+% TMMTONEHOLE:  Compute the transfer matrix coefficients for a tonehole.
 %
 % [W X Y Z] = TMMTONEHOLE(K, DELTA, B, T, ZC, STATE, CST, ALPHACM, TYPE,
 % CHIMNEY, RPAD, HPAD) returns the coefficients of the transfer matrix
@@ -158,9 +158,9 @@ if state % open hole
   % Open hole radiation impedance (unflanged low-frequency approximation)
   ZroZc = 0.25*(k*b).^2 + 1j*k*(0.6113*b + tp );
 
-  if chimney < 0.002
-    %ZroZc = ZroZc + 0.25*(k*b).^2 + 1j*k*(0.8215-0.6113)*b;
-  end
+%   if chimney < 0.002
+%     ZroZc = ZroZc + 0.25*(k*b).^2 + 1j*k*(0.8215-0.6113)*b;
+%   end
 
   % Radiation length correction
   tr = atan(-1j*ZroZc)./k;
