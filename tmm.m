@@ -12,6 +12,10 @@ function Zin = tmm( boreData, holeData, f, T, lossy, endType )
 % open; 3 = ideally open (Zl = 0)].
 %
 % by Gary P. Scavone, McGill University, 2013-2022.
+%
+% LOSSY = 0, losses are ignored. 1 uses lowest order losses (previous tmm
+% method), 2 uses approximations due to Zwikker-Kosten, 3 uses full Bessel
+% numerical computation
 
 if nargin < 3 || nargin > 6
   error( 'Invalid number of arguments.');
@@ -23,7 +27,7 @@ if ~exist( 'T', 'var')
   T = 20;
 end
 if ~exist( 'lossy', 'var')
-  lossy = true;
+  lossy = 1;
 end
 if ~exist( 'endType', 'var')
   endType = 1;
@@ -57,7 +61,7 @@ if n > 7, padt = holeData(8,:); end % tonehole pad heights
 if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 
 % Get physical variables and attenuation values
-[c, rho, wallcst, alphacm] = physicalSettings( T, f );
+[c, rho, gamma, lv, Pr, alphacm] = physicalSettings( T, f );
 if ~lossy
   wallcst = 0;
   alphacm = alphacm * 0;
@@ -84,7 +88,8 @@ nHole = sum(isHole);
 for n = length(L):-1:1
   if L(n) > eps
     if ( ra(n) == ra(n+1) )
-      [A, B, C, D] = tmmCylinder( k, L(n), ra(n), Zc(n), wallcst, alphacm );
+      [Gamma, ZcLoss] = lossesCylinder(k, ra(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
+      [A, B, C, D] = tmmCylinder( Gamma, L(n), ra(n), ZcLoss);
     else
       [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), wallcst, alphacm );
     end

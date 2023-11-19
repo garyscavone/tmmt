@@ -1,4 +1,4 @@
-function [A, B, C, D] = tmmCylinder( k, L, r, Zc, cst, alphacm )
+function [A, B, C, D] = tmmCylinder( Gamma, L, r, Zc)
 % TMMCYLINDER:  Compute the transfer-matrix coefficients for a cylindrical section.
 %
 % [A B C D] = TMMCYLINDER(K, L, R, ZC, CST, ALPHACM) returns the
@@ -14,27 +14,19 @@ function [A, B, C, D] = tmmCylinder( k, L, r, Zc, cst, alphacm )
 %
 % by Gary P. Scavone, McGill University, 2013-2022.
 
-if ~isvector(k)
-  error( 'k should be a 1D vector.' );
+if ~isvector(Gamma)
+  error( 'Gamma should be a 1D vector.' );
 end
 
-Gamma = 1j*k;
 if exist( 'cst', 'var') && cst > 0
   % Include wall losses
   Gamma = Gamma + (1+1j) * cst .* sqrt(k) / r;
 end
 
-if exist( 'alphacm', 'var')
-  if size(k) ~= size(alphacm)
-    error( 'Incompatible sizes of k and alphacm vectors.' );
-  end
-  Gamma = Gamma + alphacm;
-end
-
 sinhL = sinh( L * Gamma );
 coshL = cosh( L * Gamma );
 A = coshL;
-B = Zc * sinhL;
-C = sinhL / Zc;
+B = Zc .* sinhL;
+C = sinhL ./ Zc;
 D = A;
 

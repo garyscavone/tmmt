@@ -1,4 +1,4 @@
-function [c, rho, wallCst, alphacm] = physicalSettings( T, f, humidity, P0 )
+function [c, rho, gamma, lv, Pr, alphacm] = physicalSettings( T, f, humidity, P0 )
 %  PHYSICALSETTINGS: Determine various physical variables and loss settings
 %  for a specified temperature, frequencies, humidity and atmospheric
 %  pressure.
@@ -45,8 +45,9 @@ rho = 1.1769 * ( 1 - 0.00335 * deltaT );      % density of air (kg/m^3)
 mu = 1.846*10^(-5) * ( 1 + 0.0025 * deltaT ); % shear viscosity coefficient (kg/m s)
 gamma = 1.4017 * ( 1 - 0.00002 * deltaT );    % ratio of specific heats
 sqrtPr = 0.8410 * ( 1 - 0.00002 * deltaT );   % sqrt of Prandtl number (around 0.71)
-wallCst = sqrt(mu/(rho*c)/2)*(1+((gamma-1)/sqrtPr)); % wall loss constant (see Ref. 2)
-
+%wallCst = sqrt(mu/(rho*c)/2)*(1+((gamma-1)/sqrtPr)); % wall loss constant (see Ref. 2)
+lv = mu/(rho*c);
+Pr = sqrtPr^2;
 if nargin < 2
   alphacm = [];
   return;
