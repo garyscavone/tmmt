@@ -43,7 +43,7 @@ for n = 1:4
         subplot(221)
         plot(f, real(G), LineStyle=ls{lossy}, LineWidth=2)
         hold on
-        legend('3: Bessel.', '2: CK Approx.', '1: TMM Approx.', Location='best')
+        legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
         xlim([0, fs/2])
         xlabel('Frequency (Hz)')
@@ -53,7 +53,7 @@ for n = 1:4
         subplot(223)
         plot(f, imag(G), LineStyle=ls{lossy}, LineWidth=2)
         hold on
-        legend('3: Bessel.', '2: CK Approx.', '1: TMM Approx.', Location='best')
+        legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
         xlim([0, fs/2])
         xlabel('Frequency (Hz)')
@@ -63,7 +63,7 @@ for n = 1:4
         subplot(222)
         plot(f, real(ZcLoss), LineStyle=ls{lossy}, LineWidth=2)
         hold on
-        legend('3: Bessel.', '2: CK Approx.', '1: TMM Approx.', Location='best')
+        legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
         xlim([0, fs/2])
         xlabel('Frequency (Hz)')
@@ -73,7 +73,7 @@ for n = 1:4
         subplot(224)
         plot(f, imag(ZcLoss), LineStyle=ls{lossy}, LineWidth=2)
         hold on
-        legend('3: Bessel.', '2: CK Approx.', '1: TMM Approx.', Location='best')
+        legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
         xlim([0, fs/2])
         xlabel('Frequency (Hz)')
