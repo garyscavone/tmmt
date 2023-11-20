@@ -43,7 +43,7 @@ function [G, Zc] = lossesCylinder(k, R, Zc, c, rho, gamma, lv, Pr, lossy, alphac
 % 5. A. Chaigne and J. Kergomard (2016), "Acoustics of music instruments."
 %       Springer-Verlag. 
 
-if lossy > 3 || ~isinteger(lossy)
+if lossy > 3 || mod(lossy,1) ~= 0
     error('lossy must be an integer between 0 and 3')
 end
 

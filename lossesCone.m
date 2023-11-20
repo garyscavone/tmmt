@@ -48,7 +48,7 @@ function [G, Zc] = lossesCone(k, R1, R2, L, Zc, c, rho, gamma, lv, Pr, lossy, al
 % 5. A. Chaigne and J. Kergomard (2016), "Acoustics of music instruments."
 %       Springer-Verlag. 
 
-if lossy > 3 || ~isinteger(lossy)
+if lossy > 3 || mod(lossy,1) ~= 0
     error('lossy must be an integer between 0 and 3')
 end
 

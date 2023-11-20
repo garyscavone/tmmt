@@ -82,4 +82,5 @@ for n = 1:4
     end
     % Title for each radii comparison
     sgtitle("Loss Comparison: " + sprintf("R = 5e{-%i} m", n+2) + ", r_v \in " + sprintf("[%.2f, %.2f]", min(rv(rv > 0)), max(rv)))
+    saveas(gcf, sprintf("5e-%i.png", n+2))
 end
