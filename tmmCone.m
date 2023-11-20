@@ -1,4 +1,4 @@
-function [A, B, C, D] = tmmCone( k, L, r1, r2, Zc, cst, alphacm )
+function [A, B, C, D] = tmmCone( k, Gamma, L, r1, r2, Zc)
 % TMMCONE:  Compute the transfer-matrix coefficients for a conical section.
 %
 % [A B C D] = TMMCONE(K, L, R1, R2, ZC, CST, ALPHACM) returns the
@@ -14,36 +14,19 @@ function [A, B, C, D] = tmmCone( k, L, r1, r2, Zc, cst, alphacm )
 %
 % by Gary P. Scavone, McGill University, 2013-2022.
 
-if ~isvector(k)
-  error( 'k should be a 1D vector.' );
+if ~isvector(Gamma)
+  error( 'Gamma should be a 1D vector.' );
 end
 
-% Conical dimensions
+% % Conical dimensions
 x1 = r1 * L / (r2 - r1);
 x2 = x1 + L;
-req = L * r1 / x1 / log(1 + L/x1);
-
-Gamma = 1j*k;
-if exist( 'cst', 'var') && cst > 0
-  % Include wall losses
-  Gamma = Gamma + (1+1j) * cst .* sqrt(k) / req;
-end
-
-if exist( 'alphacm', 'var')
-  if size(k) ~= size(alphacm)
-    error( 'Incompatible sizes of k and alphacm vectors.' );
-  end
-  Gamma = Gamma + alphacm;
-end
-
-% Rescale characteristic impedance
-Zc = r1 * Zc / r2;
 
 kc = -1j * Gamma;
-sinL = sin(L*kc);
-cosL = cos(L*kc);
+sinL = sin(L.*kc);
+cosL = cos(L.*kc);
 A = (r2/r1)*cosL - sinL./(k*x1);
-B = 1j*Zc*sinL;
+B = 1j.*Zc.*sinL;
 C = (1j*(1 + 1./(x1*x2*k.^2)).*sinL + ...
-    (1/x1 - 1/x2)*cosL/1j./k)/Zc;
+    (1/x1 - 1/x2)*cosL/1j./k)./Zc;
 D = r1*cosL/r2 + sinL/x2./k;

@@ -85,7 +85,7 @@ if nOpen < 2  % Do TMM
 end
 
 % Get physical variables and attenuation values
-[c, rho, wallcst, alphacm] = physicalSettings( T, f );
+[c, rho, gamma, lv, Pr, alphacm] = physicalSettings( T, f );
 if ~lossy
   wallcst = 0;
   alphacm = alphacm * 0;
@@ -152,9 +152,11 @@ for n = 1:nOth
     % Cascade cylindrical or conical sections
     if L(m) < eps, continue; end % skip if at a diameter discontinuity
     if ra(m) == ra(m+1)
-      [A, B, C, D] = tmmCylinder( k, L(m), ra(m), Zc(m), wallcst, alphacm );
+      [Gamma, ZcLoss] = lossesCylinder(k, ra(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
+      [A, B, C, D] = tmmCylinder( Gamma, L(n), ra(n), ZcLoss);
     else
-      [A, B, C, D] = tmmCone( k, L(m), ra(m), ra(m+1), Zc(m), wallcst, alphacm );
+      [Gamma, ZcLoss] = lossesCone(k, ra(n),ra(n+1), L(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
+      [A, B, C, D] = tmmCone(k, Gamma, L(n), ra(n), ra(n+1), ZcLoss);
     end
     MAT = MA.*A + MB.*C;
     MBT = MA.*B + MB.*D;

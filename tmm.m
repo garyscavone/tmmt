@@ -15,7 +15,7 @@ function Zin = tmm( boreData, holeData, f, T, lossy, endType )
 %
 % LOSSY = 0, losses are ignored. 1 uses lowest order losses (previous tmm
 % method), 2 uses approximations due to Zwikker-Kosten, 3 uses full Bessel
-% numerical computation
+% function numerical computation
 
 if nargin < 3 || nargin > 6
   error( 'Invalid number of arguments.');
@@ -91,7 +91,9 @@ for n = length(L):-1:1
       [Gamma, ZcLoss] = lossesCylinder(k, ra(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
       [A, B, C, D] = tmmCylinder( Gamma, L(n), ra(n), ZcLoss);
     else
-      [A, B, C, D] = tmmCone( k, L(n), ra(n), ra(n+1), Zc(n), wallcst, alphacm );
+      % Use equivalent radii for loss calculation
+      [Gamma, ZcLoss] = lossesCone(k, ra(n),ra(n+1), L(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
+      [A, B, C, D] = tmmCone(k, Gamma, L(n), ra(n), ra(n+1), ZcLoss);
     end
     if Zl == 0
       Zl = B ./ D;
