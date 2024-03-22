@@ -5,8 +5,8 @@
 % by Gary P. Scavone, McGill University, 2021-2022.
 
 clear; clf;
-lossy = true; % turn on/off losses
-endType = 1;   % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
+lossy = 1;   % 0 = lossless, 1 = traditional losses, 2 = Zwikker-Kosten; 3 = Bessel function
+endType = 1; % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
 
 % Evaluation frequencies
 fmax = 6000;          % maximum evaluation frequency (Hz)
@@ -28,7 +28,7 @@ end
 % Do first TMM calculations and plot
 figure(1)
 plotTypes = [1 6];
-Zin = tmm( boreData, holeData, f, T, lossy, endType ); % cylinders
+Zin = tmm( boreData, holeData, endType, f, lossy, T ); % cylinders
 rzplot( f, Zin, plotTypes, true, true, [], 'r-');
 
 % Get second geometry data
@@ -42,7 +42,7 @@ end
 
 % Do second TMM calculations and plot
 figure(1)
-Zin = tmm( boreData, holeData, f, T, lossy, endType ); % cones & cylinders
+Zin = tmm( boreData, holeData, endType, f, lossy, T ); % cones & cylinders
 rzplot( f, Zin, plotTypes, true, false, [], 'b-'); % plot with initial hold on
 legend('Cylinders only', 'Cylinders / Cones');
 subplot(numel(plotTypes), 1, 1)

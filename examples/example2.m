@@ -5,8 +5,8 @@
 % by Gary P. Scavone, McGill University, 2021-2022.
 
 clear; clf;
-lossy = false; % turn on/off losses
-endType = 3;   % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
+lossy = 0;   % 0 = lossless, 1 = traditional losses, 2 = Zwikker-Kosten; 3 = Bessel function
+endType = 3; % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
 
 % Evaluation frequencies
 fmax = 6000;          % maximum evaluation frequency (Hz)
@@ -28,7 +28,7 @@ if isempty( boreData )
 end
 
 % Do TMM calculations
-Zin = tmm( boreData, holeData, f, T, lossy, endType ); % ideally open end
+Zin = tmm( boreData, holeData, endType, f, lossy, T ); % ideally open end
 
 % Plot result using rzplot script
 figure(2)

@@ -2,11 +2,11 @@
 % reflectance of a air column structure (as defined in a separate geometry
 % file) using the TMM approach.
 %
-% by Gary P. Scavone, McGill University, 2021-2022.
+% by Gary P. Scavone, McGill University, 2021-2024.
 
 clear; clf;
-lossy = true; % turn on/off losses
-endType = 1;   % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
+lossy = 1;   % 0 = lossless, 1 = traditional losses, 2 = Zwikker-Kosten; 3 = Bessel function
+endType = 1; % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
 
 % Evaluation frequencies
 fmax = 6000;          % maximum evaluation frequency (Hz)
@@ -19,17 +19,17 @@ T = 20;   % temperature (C)
 addpath( '../', '../geometries/' );
 
 % Get geometry data
-fingering = 7;
+fingering = 2;
 [boreData, holeData] = keefeFlute( fingering );
 if isempty( boreData )
   return;
 end
 
 % Do TMM calculations and plot
-Zin = tmm( boreData, holeData, f, T, lossy, endType ); % tmm
+Zin = tmm( boreData, holeData, endType, f, lossy, T ); % tmm
 rzplot( f, Zin, 1, true, false, [], 'r-');
 
-Zin = tmmi( boreData, holeData, f, T, lossy, endType ); % tmmi
+Zin = tmmi( boreData, holeData, endType, f, lossy, T ); % tmmi
 rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
 title('Input Impedance for Keefe flute (all holes open)')
 legend('TMM (No Interactions)', 'TMMI (Interactions)');

@@ -1,23 +1,22 @@
-function Zin = tmm( boreData, holeData, f, T, lossy, endType )
+function Zin = tmm( boreData, holeData, endType, f, lossType, T )
 % TMM: Compute the normalized input impedance of a system using the
 %      transfer matrix method.
 %
-% ZIN = TMM( BOREDATA, HOLEDATA, F, T, LOSSY, ENDTYPE ) returns the input
-% impedance of a system defined by BOREDATA and HOLEDATA, normalized by the
-% characteristic impedance at the input, at frequencies specified in the 1D
-% vector F, given an optional air temperature T in degrees Celsius (default
-% = 20 C). If the optional parameter LOSSY = false, losses will be ignored
-% (default = true). The optional parameter ENDTYPE specifies the bore end
-% condition [0 = rigidly closed; 1 = unflanged open (default); 2 = flanged
-% open; 3 = ideally open (Zl = 0)].
+% ZIN = TMM( BOREDATA, HOLEDATA, ENDTYPE, F, LOSSTYPE, T ) returns the
+% input impedance of a system defined by BOREDATA and HOLEDATA, normalized
+% by the characteristic impedance at the input, at frequencies specified in
+% the 1D vector F, given an optional air temperature T in degrees Celsius
+% (default = 20 C). The parameter ENDTYPE specifies the bore end condition
+% [0 = rigidly closed; 1 = unflanged open; 2 = flanged open; 3 = ideally
+% open (Zl = 0)]. The optional parameter LOSSTYPE specifies how losses are
+% approximated [0 = no losses; 1 = lowest order losses (previous tmm
+% method, default); 2 = Zwikker-Kosten; 3 = full Bessel function
+% computations].
 %
-% by Gary P. Scavone, McGill University, 2013-2022.
-%
-% LOSSY = 0, losses are ignored. 1 uses lowest order losses (previous tmm
-% method), 2 uses approximations due to Zwikker-Kosten, 3 uses full Bessel
-% function numerical computation
+% Initially by Gary P. Scavone, McGill University, 2013-2024, updates
+% provided by Champ Darabundit, 2023.
 
-if nargin < 3 || nargin > 6
+if nargin < 4 || nargin > 6
   error( 'Invalid number of arguments.');
 end
 if ~isvector(f)
@@ -26,11 +25,8 @@ end
 if ~exist( 'T', 'var')
   T = 20;
 end
-if ~exist( 'lossy', 'var')
-  lossy = 1;
-end
-if ~exist( 'endType', 'var')
-  endType = 1;
+if ~exist( 'lossType', 'var')
+  lossType = 1;
 end
 
 % Bore dimensions
@@ -60,24 +56,12 @@ if n > 6, padr = holeData(7,:); end % tonehole pad radii
 if n > 7, padt = holeData(8,:); end % tonehole pad heights
 if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 
-% Get physical variables and attenuation values
-[c, rho, gamma, lv, Pr, alphacm] = physicalSettings( T, f );
-if ~lossy
-  wallcst = 0;
-  alphacm = alphacm * 0;
-end
-k = 2 * pi * f / c;
-
-% Compute characteristic impedances for each bore and tonehole radius
-Zc = rho * c ./ (pi * ra.^2);
-Zch = rho * c ./ (pi * rb.^2);
-
 % Work our way back from the load impedance at the end.
 switch endType
   case 1
-    Zl = Zc(end)*radiation( k, ra(end), 'dalmont' ); % L&S unflanged approximation
+    Zl = radiation( ra(end), f, T, 'dalmont' ); % L&S unflanged approximation
   case 2
-    Zl = Zc(end)*radiation( k, ra(end), 'flanged' ); % load impedance at end
+    Zl = radiation( ra(end), f, T, 'flanged' ); % load impedance at end
   case 3
     Zl = 0;
   otherwise
@@ -87,14 +71,8 @@ end
 nHole = sum(isHole);
 for n = length(L):-1:1
   if L(n) > eps
-    if ( ra(n) == ra(n+1) )
-      [Gamma, ZcLoss] = lossesCylinder(k, ra(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
-      [A, B, C, D] = tmmCylinder( Gamma, L(n), ra(n), ZcLoss);
-    else
-      % Use equivalent radii for loss calculation
-      [Gamma, ZcLoss] = lossesCone(k, ra(n),ra(n+1), L(n), Zc(n), c, rho, gamma, lv, Pr, lossy, alphacm);
-      [A, B, C, D] = tmmCone(k, Gamma, L(n), ra(n), ra(n+1), ZcLoss);
-    end
+    [Gamma, Zc] = sectionLosses( ra(n), ra(n+1), L(n), f, T, lossType );
+    [A, B, C, D] = tmmCylCone( ra(n), ra(n+1), L(n), Gamma, Zc );
     if Zl == 0
       Zl = B ./ D;
     else
@@ -103,12 +81,13 @@ for n = length(L):-1:1
   end
   
   if isHole(n)
-    [A, B, C, D] = tmmTonehole( k, rb(nHole)/ra(n), rb(nHole), t(nHole), ...
-      Zch(nHole), states(nHole), wallcst, alphacm, '', chimney(nHole), padr(nHole), ...
+    [Gamma, ~] = sectionLosses( rb(nHole), rb(nHole), 0, f, T, lossType );
+    [A, B, C, D] = tmmTonehole( rb(nHole)/ra(n), rb(nHole), t(nHole), ...
+      states(nHole), Gamma, '', T, chimney(nHole), padr(nHole), ...
       padt(nHole), holew(nHole) );
     nHole = nHole - 1;
     Zl = (A + B./Zl) ./ (C + D./Zl);
   end
 end
 
-Zin = Zl / Zc(1);
+Zin = Zl ./ Zc;
