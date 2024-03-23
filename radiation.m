@@ -1,12 +1,14 @@
-function [Zr, R] = radiation( k, a, type )
-% [ZR, R] = RADIATION( K, A, TYPE ) computes the radiation impedance ZR
-%      (normalized by Zc) and reflectance R for the given values of k =
-%      omega / c and a = output radius in meters. TYPE is an optional
-%      parameter specifying a particular condition or formula. The default
-%      ('dalmont') is an unflanged approximation provided in [1]. Other
-%      options include the unflanged ('unflanged') solution by Levine &
-%      Schwinger (1948), an unflanged approximation by Causse ('causse')
-%      and the flanged ('flanged') solution of Norris and Sheng (1989).
+function [Zr, R] = radiation( a, f, T, type )
+% [ZR, R] = RADIATION( A, F, TYPE, T ) computes the radiation impedance ZR
+%      (not normalized by Zc) and reflectance R at frequencies specified in
+%      the 1D vector F (Hertz) and for A = output radius in meters. T is an
+%      optional air temperature in degrees Celsius (default = 20 C). TYPE
+%      is an optional parameter specifying a particular condition or
+%      formula. The default ('dalmont') is an unflanged approximation
+%      provided in [1]. Other options include the unflanged ('unflanged')
+%      solution by Levine & Schwinger (1948), an unflanged approximation by
+%      Causse ('causse') and the flanged ('flanged') solution of Norris and
+%      Sheng (1989).
 %
 % by Gary P. Scavone, McGill University, 2013-2022.
 % Based in part on functions from WIAT by Antoine Lefebvre.
@@ -37,11 +39,21 @@ function [Zr, R] = radiation( k, a, type )
 % Zr is:
 %     Zr = 0.25*ka^2 + 0.61j*ka
 
-if ( nargin < 3 )
+if nargin < 2 || nargin > 4
+  error( 'Invalid number of arguments.');
+end
+if ~isvector(f)
+  error( 'f should be a 1D vector of frequencies in Hertz.' );
+end
+if ~exist( 'T', 'var')
+  T = 20;
+end
+if ~exist( 'type', 'var')
   type = 'dalmont';
 end
 
-ka = k*a;
+[c, rho] = thermoConstants( T );
+ka = 2 * pi * f * a / c;
 ka2 = ka.^2;
 
 if strcmp( type, 'unflanged' )
@@ -111,3 +123,5 @@ elseif strcmp( type, 'flanged' )
 else
   error( 'Unknown type argument.' );
 end
+
+Zr = Zr * rho * c / (pi * a.^2); % scale by Zc

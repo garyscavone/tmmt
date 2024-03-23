@@ -4,9 +4,9 @@
 %
 % by Gary P. Scavone, McGill University, 2021-2022.
 
-%clear; clf;
-lossy = true; % turn on/off losses
-endType = 1;   % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
+clear; clf;
+lossy = 1;   % 0 = lossless, 1 = traditional losses, 2 = Zwikker-Kosten; 3 = Bessel function
+endType = 1; % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
 
 % Evaluation frequencies
 fmax = 10000;         % maximum evaluation frequency (Hz)
@@ -20,7 +20,7 @@ addpath( '../', '../geometries/' );
 
 % Get  geometry data
 figure(1)
-fingering = 3;
+fingering = 5;
 drawBore 'keefeFlute';
 [boreData, holeData] = keefeFlute( fingering );
 if isempty( boreData )
@@ -29,8 +29,8 @@ end
 
 % Do TMM calculations and plot
 figure(2)
-plotTypes = [1 11];
-Zin = tmm( boreData, holeData, f, T, lossy, endType );
+plotTypes = [1 6 11];
+Zin = tmm( boreData, holeData, endType, f, lossy, T );
 rzplot( f, Zin, plotTypes, true, false, [], 'b-', true); % with time-domain smoothing
 xlim([0 10]);
 subplot(numel(plotTypes), 1, 1)

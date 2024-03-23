@@ -1,25 +1,22 @@
-function [W, X, Y, Z] = tmmTonehole( k, delta, b, t, Zc, state, cst, alphacm, type, chimney, rPad, hPad, w )
+function [W, X, Y, Z] = tmmTonehole( delta, b, height, state, Gamma, type, T, chimney, rPad, hPad, w )
 % TMMTONEHOLE:  Compute the transfer matrix coefficients for a tonehole.
 %
-% [W X Y Z] = TMMTONEHOLE(K, DELTA, B, T, ZC, STATE, CST, ALPHACM, TYPE,
-% CHIMNEY, RPAD, HPAD) returns the coefficients of the transfer matrix
-% describing a tonehole section. K is a vector of wave numbers
-% (frequencies) at which the coefficients are computed, DELTA is the ratio
-% of hole to air column radii, B is the hole radius, T is the tonehole
-% height, ZC is the characteristic impedance of the hole, and STATE is 0 or
-% 1 to indicate whether the hole is closed or open, respectively. The
-% remaining parameters are optional: CST is a wall loss constant used to
-% include thermo-viscous losses (default = no losses), ALPHACM is a 1D
-% vector (the same size as K) of attenuation values corresponding to
-% molecular and classical losses in air (default = no losses), TYPE is
-% either 'Keefe1990', 'Dalmont2002', or 'Lefebvre2012' (default) to specify
-% the model, CHIMNEY is the length the tonehole extends out from the bore,
-% RPAD is the radius of a hanging pad over the hole (use 0 for no pad),
-% HPAD is the distance of the pad from the hole and W is the wall thickness
-% of the tonehole (default values = 0 if not otherwise specified). The
-% returned values are vectors of the same dimension as K.
+% [W X Y Z] = TMMTONEHOLE(DELTA, B, HEIGHT, STATE, GAMMA, TYPE, T, CHIMNEY,
+% RPAD, HPAD) returns the coefficients of the transfer matrix describing a
+% tonehole section. DELTA is the ratio of hole to air column radii, B is
+% the hole radius, HEIGHT is the tonehole height, STATE is 0 or 1 to
+% indicate whether the hole is closed or open, and GAMMA is a 1D vector of
+% wave propagation values (wave numbers, with or without losses) at which
+% the coefficients are computed. The remaining parameters are optional:
+% TYPE is either 'Keefe1990', 'Dalmont2002', or 'Lefebvre2012' (default) to
+% specify the model, T is the air temperature in degrees Celsius (default =
+% 20 C), CHIMNEY is the length the tonehole extends out from the bore, RPAD
+% is the radius of a hanging pad over the hole (use 0 for no pad), HPAD is
+% the distance of the pad from the hole and W is the wall thickness of the
+% tonehole (default values = 0 if not otherwise specified). The returned
+% values are vectors of the same dimension as GAMMA.
 %
-% by Gary P. Scavone, McGill University, 2013-2022.
+% by Gary P. Scavone, McGill University, 2013-2024.
 % Based in part on functions from WIAT by Antoine Lefebvre.
 %
 % References:
@@ -49,25 +46,19 @@ function [W, X, Y, Z] = tmmTonehole( k, delta, b, t, Zc, state, cst, alphacm, ty
 %      instrument toneholes with the finite element method.", J. Acoust.
 %      Soc. Am., vol 131(4), pp. 3153-3163.
 
-if nargin < 6
+if nargin < 5 || nargin > 11
   error( 'Incorrect number of parameters.' );
 end
-
-if ~isvector(k)
-  error( 'k should be a 1D vector.' );
+if ~isvector(Gamma)
+  error( 'Gamma should be a 1D vector.' );
+end
+if ~exist( 'T', 'var')
+  T = 20;
 end
 
-if nargin > 6
-  % Include losses via loss parameter
-  k = k - (1+1j) * cst .* sqrt(k) / b;
-end
-
-if nargin > 7
-  if size(k) ~= size(alphacm)
-    error( 'Incompatible sizes of k and alphacm vectors.' );
-  end
-  k = k + alphacm;
-end
+[c, rho, ~, lv, ~] = thermoConstants( T );
+k = -1j * Gamma;
+Zc = rho * c / ( pi * b * b );
 
 if nargin < 8 || isempty(type), type = 'Lefebvre2012'; end
 if nargin < 9, chimney = 0; end
@@ -76,11 +67,10 @@ if nargin < 10, hPad = 0; end
 if nargin < 11, w = 0; end
 
 if strcmp( type, 'Keefe1990' )
-  tgh = t + b*delta*(1 + 0.172*delta^2)/8; % tonehole geometric height
+  tgh = height + b*delta*(1 + 0.172*delta^2)/8; % tonehole geometric height
 
   if state % open hole
-    eta = 1.846*10^(-5); % shear viscosity of air (at 26.85 C)
-    dv = sqrt(2*eta ./ (Zc*pi*(b^2)*k));
+    dv = sqrt(lv ./ k);
     rc = 0.0005; % tonehole radius of curvature (m) ... estimate
 
     if rPad > 0 % effective length with pad
@@ -99,17 +89,17 @@ if strcmp( type, 'Keefe1990' )
     tao = (0.47*b*delta^4)/(tanh(1.84*tgh/b) + 0.62*delta^2 + 0.64*delta);
 
     % Open tonehole shunt & series impedances
-    Zs = Zc * (1j*k.*te + xie);
-    Za = -1j*Zc*tao*k;
+    Zs = Zc .* (1j*k.*te + xie);
+    Za = -1j * Zc .* k * tao;
 
   else % closed hole
     % Closed series equivalent length
     tac = (0.47*b.*delta.^4)/(coth(1.84*tgh/b) + 0.62*delta^2 + 0.64*delta);
     
     % Closed tonehole shunt & series impedances
-    Zs = -1j*Zc * (cot(tgh*k) + tgh*(0.25*(b./tgh).^2 ...
+    Zs = -1j*Zc .* (cot(tgh*k) + tgh*(0.25*(b./tgh).^2 ...
       + 0.58*delta^2 - 0.25*pi*b / tgh)*k);
-    Za = -1j*Zc*tac*k;
+    Za = -1j * Zc .* k * tac;
   end
   W = 1; X = Za; Y = 1 ./ Zs; Z = 1;
   return;
@@ -121,8 +111,8 @@ elseif strcmp( type, 'Dalmont2002' )
   if state % open hole series length correction from [2]
     ta = -0.28 * b * delta^2;
   else % closed hole series length correction from [3]
-   ta = b * delta^2 / (1.78*coth(1.84*t/b) + 0.94 + 0.54*delta + ...
-     0.285*delta^2);
+    ta = -b * delta^2 / (1.78*coth(1.84*height/b) + 0.94 + 0.54*delta + ...
+      0.285*delta^2);
   end
   
 elseif strcmp( type, 'Lefebvre2012' )
@@ -135,9 +125,9 @@ elseif strcmp( type, 'Lefebvre2012' )
   ti = ti * (1 + H*I);
 
   if state % open hole series length correction: Eq. (33) in [6]
-    ta = (-0.35 + 0.06*tanh(2.7*t/b)) * b * delta^2;
+    ta = (-0.35 + 0.06*tanh(2.7*height/b)) * b * delta^2;
   else % closed hole series length correction: Eq. (34) in [6]
-    ta = (-0.12 - 0.17*tanh(2.4*t/b)) * b * delta^2;
+    ta = (-0.12 - 0.17*tanh(2.4*height/b)) * b * delta^2;
   end
   
 else
@@ -166,17 +156,17 @@ if state % open hole
   tr = atan(-1j*ZroZc)./k;
 
   % Shunt impedance
-  Zs = 1j * Zc * (k.*ti + tan( k.*(t+tm+tr) ));
+  Zs = 1j * Zc .* (k.*ti + tan( k.*(height+tm+tr) ));
 
 else % closed hole
 
   % Shunt impedance
-  Zs = 1j * Zc * (k.*ti - cot( k * (t + tm) ));
+  Zs = 1j * Zc .* (k.*ti - cot( k * (height + tm) ));
 
 end
 
 % Series impedance
-Za = 1j * Zc * delta^2 * k * ta;
+Za = 1j * Zc .* delta^2 * k * ta;
 
 ZaoZs = Za ./ Zs;
 W = 1 + 0.5 * ZaoZs;

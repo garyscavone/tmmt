@@ -5,8 +5,8 @@
 % by Gary P. Scavone, McGill University, 2021-2022.
 
 clear; clf;
-lossy = true; % turn on/off losses
-endType = 1;   % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
+lossy = 1;   % 0 = lossless, 1 = traditional losses, 2 = Zwikker-Kosten; 3 = Bessel function
+endType = 1; % 0 = closed, 1 = unflanged, 2 = flanged, 3 = ideally open
 
 % Evaluation frequencies
 fmax = 6000;          % maximum evaluation frequency (Hz)
@@ -26,10 +26,10 @@ if isempty( boreData )
 end
 
 % Do TMM calculations and plot
-Zin = tmm( boreData, holeData, f, T, lossy, endType ); % unflanged
+Zin = tmm( boreData, holeData, endType, f, lossy, T ); % unflanged
 rzplot( f, Zin, 1, true, false, [], 'ro');
 
-Zin = tmm( boreData, holeData, f, T, lossy, 3 ); % ideally open
+Zin = tmm( boreData, holeData, 3, f, lossy, T ); % ideally open
 rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
 title('Input Impedance of 60 cm pipe (Z_L = 0 vs. unflanged)')
 legend('Unflanged', 'Ideally Open');
