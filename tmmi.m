@@ -13,6 +13,19 @@ function Zin = tmmi( boreData, holeData, endType, f, lossType, T )
 % method, default); 2 = Zwikker-Kosten; 3 = full Bessel function
 % computations].
 %
+% BOREDATA is a 2D matrix, with values in the first row corresponding to
+% positions along the center axis of a specified geometry, from input to
+% output ends, and values in the second row corresponding to radii at those
+% positions (all values in meters).
+%
+% HOLEDATA is a 2D matrix specifying information about holes along a
+% geometry. HOLEDATA can be empty ([]) or given by zeros(6, 0) if no holes
+% exist. If holes do exist, the first row specifies positions along the
+% center axis and each subsequent row specifies corresponding hole radii,
+% hole heights, hole protrusion lengths, hole states (open or closed), pad
+% states, pad radii, pad heights and wall thicknesses (all values, other
+% than states, are in meters).
+%
 % Initially by Gary P. Scavone, McGill University, 2013-2024, updates
 % provided by Champ Darabundit, 2023.
 %
@@ -37,6 +50,9 @@ if ~exist( 'T', 'var')
 end
 if ~exist( 'lossType', 'var')
   lossType = 1;
+end
+if isempty( holeData )
+  holeData = zeros(6, 0);
 end
 
 % Calculate and use mutual radiation impedances. If this is false, the
