@@ -19,7 +19,7 @@ T = 20;   % temperature (C)
 addpath( '../', '../geometries/' );
 
 % Get geometry data
-fingering = 2;
+fingering = 6;  % use a fingering with more open holes to see differences
 [boreData, holeData] = keefeFlute( fingering );
 if isempty( boreData )
   return;
@@ -27,10 +27,12 @@ end
 
 % Do TMM calculations and plot
 Zin = tmm( boreData, holeData, endType, f, lossy, T ); % tmm
-rzplot( f, Zin, 1, true, false, [], 'r-');
+rzplot( f, Zin, [1 11], true, false, [], 'r-');
 
 Zin = tmmi( boreData, holeData, endType, f, lossy, T ); % tmmi
-rzplot( f, Zin, 1, true, true, [], 'b-'); % plot with initial hold on
-title('Input Impedance for Keefe flute (all holes open)')
-legend('TMM (No Interactions)', 'TMMI (Interactions)');
+rzplot( f, Zin, [1 11], true, true, [], 'b-'); % plot with initial hold on
+xlim([0 10]);
+subplot(2, 1, 1)
 ylim([-40 40])
+title('Input Impedance / reflection function for Keefe flute')
+legend('TMM (No Interactions)', 'TMMI (Interactions)');

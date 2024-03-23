@@ -9,7 +9,7 @@ clear all; close all; clc; warning('off')
 % Evaluation frequencies
 N = 2^11;                   % Number of evaluation points
 fs = 48e3;                  % Sampling frequency, evaluate up to Nyquist
-f = [0:N/2]*(fs/N);
+f = (0:N/2)*(fs/N);
 
 T = 20;                     % temperature (C)
 
@@ -17,8 +17,8 @@ T = 20;                     % temperature (C)
 addpath('../')
 
 % Get physical constants based on temperature
-[c, rho, gamma, lv, Pr, alphacm] = physicalSettings(T, f);
-k = (2*pi*f)./c;            % Compute the wavenumber
+[c, rho, gamma, lv, Pr] = thermoConstants( T );
+k = (2*pi*f)./c;      % Compute the wavenumber
 
 % Radii to compare and initial characteristic impedance
 ra = [5e-3, 5e-4, 5e-5, 5e-6];
@@ -30,18 +30,18 @@ for n = 1:4
     % for different approximations
     rv = ra(n)*sqrt(abs(k/lv));
     figure()
-    for lossy = 3:-1:1
+    for lossType = 3:-1:1
         % Do loss calculations
-        [G, ZcLoss] = lossesCylinder(k, ra(n), Zc(n), c, rho, gamma, lv, Pr, lossy);
+        [G, Zc] = sectionLosses( ra(n), ra(n), 0, f, T, lossType);
 
         % If Zc is scalar, multiply by ones for the plot
-        if numel(ZcLoss) == 1
-            ZcLoss = ones(size(f)).*ZcLoss;
+        if numel(Zc) == 1
+            Zc = ones(size(f)).*Zc;
         end
 
         % Plot and compare different loss approximations
         subplot(221)
-        plot(f, real(G), LineStyle=ls{lossy}, LineWidth=2)
+        plot(f, real(G), LineStyle=ls{lossType}, LineWidth=2)
         hold on
         legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
@@ -51,7 +51,7 @@ for n = 1:4
         title('Lossy Wavenumer \Gamma')
 
         subplot(223)
-        plot(f, imag(G), LineStyle=ls{lossy}, LineWidth=2)
+        plot(f, imag(G), LineStyle=ls{lossType}, LineWidth=2)
         hold on
         legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
@@ -61,7 +61,7 @@ for n = 1:4
         title('Lossy Wavenumer \Gamma')
 
         subplot(222)
-        plot(f, real(ZcLoss), LineStyle=ls{lossy}, LineWidth=2)
+        plot(f, real(Zc), LineStyle=ls{lossType}, LineWidth=2)
         hold on
         legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on
@@ -71,7 +71,7 @@ for n = 1:4
         title('Char. Impedance Z_c')
 
         subplot(224)
-        plot(f, imag(ZcLoss), LineStyle=ls{lossy}, LineWidth=2)
+        plot(f, imag(Zc), LineStyle=ls{lossType}, LineWidth=2)
         hold on
         legend('3: Bessel.', '2: ZK Approx.', '1: TMM Approx.', Location='best')
         grid on

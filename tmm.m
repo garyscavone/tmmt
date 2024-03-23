@@ -81,7 +81,7 @@ for n = length(L):-1:1
   end
   
   if isHole(n)
-    [Gamma, ~] = sectionLosses( rb(nHole), rb(nHole), 0, f, T, lossType );
+    Gamma = sectionLosses( rb(nHole), rb(nHole), 0, f, T, lossType );
     [A, B, C, D] = tmmTonehole( rb(nHole)/ra(n), rb(nHole), t(nHole), ...
       states(nHole), Gamma, '', T, chimney(nHole), padr(nHole), ...
       padt(nHole), holew(nHole) );
