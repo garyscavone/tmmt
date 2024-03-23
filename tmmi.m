@@ -195,9 +195,9 @@ end
 if endType
   switch endType
     case 1
-      ZB(nOpen,nOpen,:) = Zc(end)*radiation( k, ra(end), 'UnflangedDalmont'); % self-radiation
+      ZB(nOpen,nOpen,:) = Zc(end)*radiation( k, ra(end), 'dalmont'); % self-radiation
     case 2
-      ZB(nOpen,nOpen,:) = Zc(end)*radiation( k, ra(end), 'FlangedNorris'); % self-radiation
+      ZB(nOpen,nOpen,:) = Zc(end)*radiation( k, ra(end), 'flanged'); % self-radiation
     case 3
       ZB(nOpen,nOpen,:) = zeros(size(k));
   end
