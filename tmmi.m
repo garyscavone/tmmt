@@ -236,6 +236,9 @@ if isscalar(endType)    % Handle built in radiations
         Y(nOth,nOth,:) = Ypnm1 + MC./MA;
     end
 else    % User-supplied load impedance
+    if length(endType) ~= length(f)
+        error('Provided endType impedance vector must have same length as f!')
+    end
     ZB(nOpen, nOpen, :) = endType;
     % We still do interactions
     if doInteractions
