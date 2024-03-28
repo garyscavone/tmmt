@@ -8,7 +8,10 @@ function Zin = tmm( boreData, holeData, endType, f, lossType, T )
 % the 1D vector F, given an optional air temperature T in degrees Celsius
 % (default = 20 C). The parameter ENDTYPE specifies the bore end condition
 % [0 = rigidly closed; 1 = unflanged open; 2 = flanged open; 3 = ideally
-% open (Zl = 0)]. The optional parameter LOSSTYPE specifies how losses are
+% open (Zl = 0)]. ENDTYPE can also be 1D vector, with the same dimensions 
+% as F, representing a pre-computed load impedance.
+% 
+% The optional parameter LOSSTYPE specifies how losses are
 % approximated [0 = no losses; 1 = lowest order losses (previous tmm
 % method, default); 2 = Zwikker-Kosten; 3 = full Bessel function
 % computations].
@@ -73,15 +76,22 @@ if n > 7, padt = holeData(8,:); end % tonehole pad heights
 if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 
 % Work our way back from the load impedance at the end.
-switch endType
-  case 1
-    Zl = radiation( ra(end), f, T, 'dalmont' ); % L&S unflanged approximation
-  case 2
-    Zl = radiation( ra(end), f, T, 'flanged' ); % load impedance at end
-  case 3
-    Zl = 0;
-  otherwise
-    Zl = Inf;
+if isscalar(endType)
+    switch endType
+      case 1
+        Zl = radiation( ra(end), f, T, 'dalmont' ); % L&S unflanged approximation
+      case 2
+        Zl = radiation( ra(end), f, T, 'flanged' ); % load impedance at end
+      case 3
+        Zl = 0;
+      otherwise
+        Zl = Inf;
+    end
+else
+    if length(endType) ~= length(f)
+        error('Provided endType impedance vector must have same length as f!')
+    end
+    Zl = endType;
 end
 
 nHole = sum(isHole);

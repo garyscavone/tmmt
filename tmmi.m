@@ -8,7 +8,11 @@ function Zin = tmmi( boreData, holeData, endType, f, lossType, T )
 % the 1D vector F, given an optional air temperature T in degrees Celsius
 % (default = 20 C). The parameter ENDTYPE specifies the bore end condition
 % [0 = rigidly closed; 1 = unflanged open; 2 = flanged open; 3 = ideally
-% open (Zl = 0)]. The optional parameter LOSSTYPE specifies how losses are
+% open (Zl = 0)]. ENDTYPE can also be 1D vector, with the same dimensions 
+% as F, representing a pre-computed load impedance. In this case the end is
+% assumed some sort of open end condition. 
+% 
+% The optional parameter LOSSTYPE specifies how losses are
 % approximated [0 = no losses; 1 = lowest order losses (previous tmm
 % method, default); 2 = Zwikker-Kosten; 3 = full Bessel function
 % computations].
@@ -89,9 +93,19 @@ if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 nOth = sum( states );   % number of open toneholes
 
 % Check pipe end condition
+% if endType is not closed then increment nOpen, as the end is another hole
+% if the user supplies a load impedance we treat the load impedance as if
+% it is another hole
+% Note: The only case this is not valid is if you were to try to append a
+% closed pipe with no holes as a load impedance. The correct thing to do
+% in that case is simply define a different bore geometry. 
 nOpen = nOth;
-if endType
-  nOpen = nOth + 1;
+if isscalar(endType)
+    if endType
+        nOpen = nOth + 1;
+    end
+else
+    nOpen = nOth + 1;
 end
 
 if nOpen < 2  % Do TMM
@@ -198,25 +212,40 @@ for n = 1:nOth
 end
 
 % Now handle end condition
-if endType
-  switch endType
-    case 1
-      ZB(nOpen,nOpen,:) = radiation( ra(end), f, T, 'dalmont'); % self-radiation
-    case 2
-      ZB(nOpen,nOpen,:) = radiation( ra(end), f, T, 'flanged'); % self-radiation
-    case 3
-      ZB(nOpen,nOpen,:) = zeros(size(k));
-  end
-  if doInteractions
-    for m = 1:nOth
-      dnm = abs( x(end) - ds(m) );
-      ZB(nOpen, m, :) = 1j*rho*f.*exp(-1j*k*dnm)/(2*dnm);
+if isscalar(endType)    % Handle built in radiations
+    if endType
+        switch endType
+            case 1
+              ZB(nOpen,nOpen,:) = radiation( ra(end), f, T, 'dalmont'); % self-radiation
+            case 2
+              ZB(nOpen,nOpen,:) = radiation( ra(end), f, T, 'flanged'); % self-radiation
+            case 3
+              ZB(nOpen,nOpen,:) = zeros(size(k));
+        end
+  
+        if doInteractions
+            for m = 1:nOth
+              dnm = abs( x(end) - ds(m) );
+              ZB(nOpen, m, :) = 1j*rho*f.*exp(-1j*k*dnm)/(2*dnm);
+            end
+        end
+          Y(nOpen,nOpen-1,:) = Ymunm1;
+          Y(nOpen,nOpen,:) = Ypnm1;
+
+    else % end is closed
+        Y(nOth,nOth,:) = Ypnm1 + MC./MA;
     end
-  end
-  Y(nOpen,nOpen-1,:) = Ymunm1;
-  Y(nOpen,nOpen,:) = Ypnm1;
-else % end is closed
-  Y(nOth,nOth,:) = Ypnm1 + MC./MA;
+else    % User-supplied load impedance
+    ZB(nOpen, nOpen, :) = endType;
+    % We still do interactions
+    if doInteractions
+        for m = 1:nOth
+            dnm = abs( x(end) - ds(m) );
+            ZB(nOpen, m, :) = 1j*rho*f.*exp(-1j*k*dnm)/(2*dnm);
+        end
+    end
+    Y(nOpen,nOpen-1,:) = Ymunm1;
+    Y(nOpen,nOpen,:) = Ypnm1;
 end
 
 % Compute Eqs. 14 & 10 for each frequency
