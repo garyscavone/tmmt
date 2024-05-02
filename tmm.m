@@ -72,6 +72,10 @@ if n > 6, padr = holeData(7,:); end % tonehole pad radii
 if n > 7, padt = holeData(8,:); end % tonehole pad heights
 if n > 8, holew = holeData(9,:); end % tonehole wall thickness
 
+if f(1) == 0 % avoid zero frequency calculations
+  f(1) = eps;
+end
+
 % Work our way back from the load impedance at the end.
 switch endType
   case 1
@@ -106,4 +110,8 @@ for n = length(L):-1:1
   end
 end
 
+if ra(1) ~= ra(2) % recalculate Zc for input conic section
+  [c, rho] = thermoConstants( T );
+  Zc = rho * c / ( pi * ra(1) * ra(1) );
+end
 Zin = Zl ./ Zc;

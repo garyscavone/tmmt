@@ -67,7 +67,7 @@ if ~exist( 'P0', 'var')
   P0 = 101325;    % atmospheric pressure at sea level in Pascals
 end
 if lossType > 3 || mod(lossType, 1) ~= 0
-  error('lossy must be an integer between 0 and 3')
+  error('lossType must be an integer between 0 and 3')
 end
 
 [c, rho, gamma, lv, Pr] = thermoConstants( T );
